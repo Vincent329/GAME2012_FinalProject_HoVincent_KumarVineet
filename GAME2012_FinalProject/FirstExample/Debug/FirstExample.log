@@ -1,0 +1,21 @@
+﻿  GAME2012_A4_HoVincent.cpp
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(91,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(103,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(151,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(170,30): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=GLfloat
+          ]
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(171,30): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=GLfloat
+          ]
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(209,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(426,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(437,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(478,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\Shape.h(502,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\FirstExample\GAME2012_A4_HoVincent.cpp(225,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  FirstExample.vcxproj -> C:\Users\Vincent Ho\Documents\GEORGE BROWN COLLEGE\3D Graphics Programming\GAME2012_W12_Lecture\Debug\FirstExample.exe
