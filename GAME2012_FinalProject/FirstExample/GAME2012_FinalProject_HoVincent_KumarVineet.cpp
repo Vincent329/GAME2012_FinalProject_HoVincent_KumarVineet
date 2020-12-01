@@ -104,7 +104,8 @@ Grid g_grid(40);
 Cube g_cube;
 Prism g_prism(24);
 Plane g_plane;
-ClonedCone g_clonedCone(6);
+ClonedCone g_clonedCone(12);
+ClonedPrism g_clonedPrism(12);
 
 void init(void)
 {
@@ -312,10 +313,10 @@ void display(void)
 	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 1.0f, -2.0f));
 	glDrawElements(GL_TRIANGLES, g_clonedCone.NumIndices(), GL_UNSIGNED_SHORT, 0);
 
-	//glBindTexture(GL_TEXTURE_2D, blankTx);
-	//g_prism.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	//transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(3.0f, 0.0f, -2.0f));
-	//glDrawElements(GL_TRIANGLES, g_prism.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	glBindTexture(GL_TEXTURE_2D, brickTx);
+	g_clonedPrism.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(3.0f, 1.0f, -2.0f));
+	glDrawElements(GL_TRIANGLES, g_clonedPrism.NumIndices(), GL_UNSIGNED_SHORT, 0);
 
 	glBindVertexArray(0); // Done writing.
 	glutSwapBuffers(); // Now for a potentially smoother render.

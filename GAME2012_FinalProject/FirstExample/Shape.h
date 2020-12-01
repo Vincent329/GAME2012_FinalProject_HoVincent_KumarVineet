@@ -439,12 +439,6 @@ struct Prism : public Shape
 			shape_vertices.push_back(0.5f + 0.5f * sin(theta));
 			theta += 2 * PI / sides;
 		}
-		
-		// Middle faces (UV purposes)
-		for (int i = 0; i < sides; ++i)
-		{
-			//top triangle
-		}
 
 		// Indices now.
 		// Bottom face.
@@ -490,6 +484,169 @@ struct Prism : public Shape
 			shape_uvs.push_back(0); // No texture for grid so value doesn't matter.
 			shape_uvs.push_back(0);
 		}
+		ColorShape(1.0f, 1.0f, 1.0f);
+		CalcAverageNormals(shape_indices, shape_indices.size(), shape_vertices, shape_vertices.size());
+	}
+};
+
+struct ClonedPrism : public Shape 
+{
+	ClonedPrism(int sides)
+	{
+		float theta = 0.0f;
+		int indexCount = 0;
+		float gamma = 0.0f;
+		// --------------------------- Bottom face ---------------------------
+		for (int i = 0; i < sides; ++i)
+		{
+			// Make the center vertex every time
+			shape_vertices.push_back(0.5f);
+			shape_vertices.push_back(0.0f);
+			shape_vertices.push_back(0.5f);
+			// UV for center point
+			shape_uvs.push_back(0.5f);
+			shape_uvs.push_back(0.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+
+			// bottomleft point
+			shape_vertices.push_back(0.5f + 0.5f * cos(theta));
+			shape_vertices.push_back(0.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(theta));
+			//Uvs for bottom left point
+			shape_uvs.push_back(0.0f);
+			shape_uvs.push_back(1.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+
+			theta += 2 * PI / sides; // progress the next side
+
+			// bottom right point
+			shape_vertices.push_back(0.5f + 0.5f * cos(theta));
+			shape_vertices.push_back(0.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(theta));
+			//Uvs for bottom right point
+			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(1.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+		}
+
+		// ---------------------- Top Face -----------------------------
+
+		for (int i = 0; i < sides; ++i)
+		{
+			// Make the center vertex every time
+			shape_vertices.push_back(0.5f);
+			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(0.5f);
+			// UV for center point
+			shape_uvs.push_back(0.5f);
+			shape_uvs.push_back(0.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+
+			// bottom right point
+			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
+			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
+			//Uvs for bottom right point
+			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(1.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+
+			gamma -= 2 * PI / sides; // progress the next side
+
+			// bottom left point
+			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
+			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
+			//Uvs for bottom left point
+			shape_uvs.push_back(0.0f);
+			shape_uvs.push_back(1.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+		}
+
+		// ---------------- Middle Faces --------------------
+		gamma = 0.0f;
+		theta = 0.0f;
+		for (int i = 0; i < sides; ++i)
+		{
+			// ---------------top triangle----------
+			// top left point
+			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
+			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
+			//Uvs for top left point
+			shape_uvs.push_back(0.0f);
+			shape_uvs.push_back(0.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+
+			gamma += 2 * PI / sides; // progress the next side
+
+			// top right point
+			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
+			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
+			//Uvs for top right point
+			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(0.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+
+			// bottom right
+			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
+			shape_vertices.push_back(0.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
+			//Uvs for bottomright point
+			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(1.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+
+			
+
+			// ---------------Bottom Triangle-----------------------
+			
+
+			// bottom right
+			shape_vertices.push_back(0.5f + 0.5f * cos(theta));
+			shape_vertices.push_back(0.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(theta));
+			//Uvs for bottomright point
+			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(1.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+
+			theta -= 2 * PI / sides; // progress the next side
+
+			// top left point
+			shape_vertices.push_back(0.5f + 0.5f * cos(theta));
+			shape_vertices.push_back(0.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(theta));
+			//Uvs for top left point
+			shape_uvs.push_back(0.0f);
+			shape_uvs.push_back(1.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+
+			// top left point
+			shape_vertices.push_back(0.5f + 0.5f * cos(theta));
+			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(theta));
+			//Uvs for top left point
+			shape_uvs.push_back(0.0f);
+			shape_uvs.push_back(0.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
+			
+		}
+
+		// Make UVs for the Cone
 		ColorShape(1.0f, 1.0f, 1.0f);
 		CalcAverageNormals(shape_indices, shape_indices.size(), shape_vertices, shape_vertices.size());
 	}
@@ -543,6 +700,7 @@ struct Cone : public Shape
 	}
 };
 
+// Cone with cloned vertices
 struct ClonedCone : public Shape
 {
 	ClonedCone(int sides)
@@ -600,18 +758,6 @@ struct ClonedCone : public Shape
 			// push an index back
 			shape_indices.push_back(indexCount++);
 
-			// bottomleft point
-			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
-			shape_vertices.push_back(0.0f);
-			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
-			//Uvs for bottom left point
-			shape_uvs.push_back(0.0f);
-			shape_uvs.push_back(1.0f);
-			// push an index back
-			shape_indices.push_back(indexCount++);
-
-			gamma -= 2 * PI / sides; // progress the next side
-
 			// bottom right point
 			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
 			shape_vertices.push_back(0.0f);
@@ -621,27 +767,19 @@ struct ClonedCone : public Shape
 			shape_uvs.push_back(1.0f);
 			// push an index back
 			shape_indices.push_back(indexCount++);
+
+			gamma -= 2 * PI / sides; // progress the next side
+
+			// bottom left point
+			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
+			shape_vertices.push_back(0.0f);
+			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
+			//Uvs for bottom left point
+			shape_uvs.push_back(0.0f);
+			shape_uvs.push_back(1.0f);
+			// push an index back
+			shape_indices.push_back(indexCount++);
 		}
-		//// Indices now. Bottom face.
-		//for (int i = 1; i < sides; i++)
-		//{
-		//	shape_indices.push_back(0);
-		//	shape_indices.push_back(i);
-		//	shape_indices.push_back(i + 1);
-		//}
-		//shape_indices.push_back(0);
-		//shape_indices.push_back(sides);
-		//shape_indices.push_back(1);
-		//// Middle faces.
-		//for (int i = 1; i < sides; i++)
-		//{
-		//	shape_indices.push_back(i);
-		//	shape_indices.push_back(sides + 1);
-		//	shape_indices.push_back(i + 1);
-		//}
-		//shape_indices.push_back(sides);
-		//shape_indices.push_back(sides + 1);
-		//shape_indices.push_back(1);
 
 		// Make UVs for the Cone
 		ColorShape(1.0f, 1.0f, 1.0f);
