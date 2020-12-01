@@ -18,7 +18,7 @@
     <ClCompile Include="LoadShaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GAME2012_A4_HoVincent.cpp">
+    <ClCompile Include="GAME2012_FinalProject_HoVincent_KumarVineet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

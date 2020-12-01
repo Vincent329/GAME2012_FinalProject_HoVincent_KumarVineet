@@ -65,7 +65,7 @@ GLfloat pitch, yaw;
 int lastX, lastY;
 
 // Texture variables.
-GLuint alexTx, blankTx, brickTx;
+GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx;
 GLint width, height, bitDepth;
 
 // Light positioning
@@ -100,10 +100,11 @@ void resetView()
 }
 
 // Shapes. Recommend putting in a map
-Grid g_grid(10);
+Grid g_grid(40);
 Cube g_cube;
 Prism g_prism(24);
 Plane g_plane;
+ClonedCone g_clonedCone(6);
 
 void init(void)
 {
@@ -283,10 +284,12 @@ void display(void)
 	glBindVertexArray(vao);
 	// Draw all shapes.
 
+	// Grid Guideline
 	glBindTexture(GL_TEXTURE_2D, blankTx);
 	g_grid.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
 	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, -90.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 	glDrawElements(GL_LINE_STRIP, g_grid.NumIndices(), GL_UNSIGNED_SHORT, 0);
+
 
 	glBindTexture(GL_TEXTURE_2D, brickTx);
 	g_plane.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
@@ -296,11 +299,19 @@ void display(void)
 
 	glUniform3f(glGetUniformLocation(program, "pLight.position"), pLight.position.x, pLight.position.y, pLight.position.z);
 
+	// Walls
+
 	//glBindTexture(GL_TEXTURE_2D, blankTx);
 	////g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
 	//transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 0.0f, -2.0f));
 	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
 	//	
+
+	glBindTexture(GL_TEXTURE, brickTx);
+	g_clonedCone.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 1.0f, -2.0f));
+	glDrawElements(GL_TRIANGLES, g_clonedCone.NumIndices(), GL_UNSIGNED_SHORT, 0);
+
 	//glBindTexture(GL_TEXTURE_2D, blankTx);
 	//g_prism.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
 	//transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(3.0f, 0.0f, -2.0f));
