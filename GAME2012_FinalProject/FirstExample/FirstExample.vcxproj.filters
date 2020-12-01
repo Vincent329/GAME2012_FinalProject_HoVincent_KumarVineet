@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\ProjectResources">
+      <UniqueIdentifier>{52b47bf0-ac40-40f8-a0b3-ef082bbb4479}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LoadShaders.cpp">
@@ -48,6 +51,57 @@
     </Image>
     <Image Include="d6.png">
       <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_brick_bright.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_brick_grey.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_grass_classic.png">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_grass_dull.png">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_grass_green.png">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_hedge_1.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_hedge_2.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_hedge_3.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_roof_classic.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_roof_mix.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_roof_mix_1.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_roof_slate.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_roof_white.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_stone.png">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_wood_floor.png">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_wood_plank.png">
+      <Filter>Resource Files\ProjectResources</Filter>
+    </Image>
+    <Image Include="ProjectResources\tx_wood_raw.jpg">
+      <Filter>Resource Files\ProjectResources</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

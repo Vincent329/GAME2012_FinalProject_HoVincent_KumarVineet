@@ -100,6 +100,23 @@
     <Image Include="blank.jpg" />
     <Image Include="brick.jpg" />
     <Image Include="d6.png" />
+    <Image Include="ProjectResources\tx_brick_bright.jpg" />
+    <Image Include="ProjectResources\tx_brick_grey.jpg" />
+    <Image Include="ProjectResources\tx_grass_classic.png" />
+    <Image Include="ProjectResources\tx_grass_dull.png" />
+    <Image Include="ProjectResources\tx_grass_green.png" />
+    <Image Include="ProjectResources\tx_hedge_1.jpg" />
+    <Image Include="ProjectResources\tx_hedge_2.jpg" />
+    <Image Include="ProjectResources\tx_hedge_3.jpg" />
+    <Image Include="ProjectResources\tx_roof_classic.jpg" />
+    <Image Include="ProjectResources\tx_roof_mix.jpg" />
+    <Image Include="ProjectResources\tx_roof_mix_1.jpg" />
+    <Image Include="ProjectResources\tx_roof_slate.jpg" />
+    <Image Include="ProjectResources\tx_roof_white.jpg" />
+    <Image Include="ProjectResources\tx_stone.png" />
+    <Image Include="ProjectResources\tx_wood_floor.png" />
+    <Image Include="ProjectResources\tx_wood_plank.png" />
+    <Image Include="ProjectResources\tx_wood_raw.jpg" />
     <Image Include="wook.png" />
   </ItemGroup>
   <ItemGroup>
