@@ -66,7 +66,7 @@ GLfloat pitch, yaw;
 int lastX, lastY;
 
 // Texture variables.
-GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx;
+GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx;
 GLint width, height, bitDepth;
 
 // Light positioning
@@ -100,9 +100,10 @@ void resetView()
 	// View will now get set only in transformObject
 }
 
-// Shapes. Recommend putting in a map
+// ---------------------------- Shapes. Recommend putting in a map ---------------------------------------------
 Grid g_grid(40);
 Cube g_cube;
+Cube longHedge;
 Prism g_prism(24);
 Plane g_plane;
 ClonedCone g_clonedCone(12);
@@ -176,6 +177,18 @@ void init(void)
 	glGenTextures(1, &brickTx);
 	glBindTexture(GL_TEXTURE_2D, brickTx);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image3);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	// Hedge Texture
+	unsigned char* image4 = stbi_load("tx_grass_dull.png", &width, &height, &bitDepth, 0);
+	if (!image4) cout << "Unable to load file!" << endl;
+
+	glGenTextures(1, &hedgeTx);
+	glBindTexture(GL_TEXTURE_2D, hedgeTx);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image4);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -275,6 +288,10 @@ void transformObject(glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngl
 	glUniformMatrix4fv(projID, 1, GL_FALSE, &Projection[0][0]);
 }
 
+void drawObjects()
+{
+
+}
 //---------------------------------------------------------------------
 //
 // display
@@ -309,7 +326,125 @@ void display(void)
 	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
 	//	
 
-	glBindTexture(GL_TEXTURE, brickTx);
+	// Hedge Maze Borders
+	glBindTexture(GL_TEXTURE_2D, hedgeTx);
+	g_cube.BufferLongHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(glm::vec3(1.0f, 1.0f, 23.0f), X_AXIS, 0.0f, glm::vec3(0.0f, 0.0f, -23.0f));
+	glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, hedgeTx);
+	g_cube.BufferLongHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(glm::vec3(1.0f, 1.0f, 23.0f), X_AXIS, 0.0f, glm::vec3(18.0f, 0.0f, -23.0f));
+	glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, hedgeTx);
+	g_cube.BufferWideHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(glm::vec3(7.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(1.0f, 0.0f, -1.0f));
+	glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, hedgeTx);
+	g_cube.BufferWideHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(glm::vec3(7.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(1.0f, 0.0f, -23.0f));
+	glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, hedgeTx);
+	g_cube.BufferWideHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(glm::vec3(7.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(11.0f, 0.0f, -1.0f));
+	glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, hedgeTx);
+	g_cube.BufferWideHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(glm::vec3(7.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(11.0f, 0.0f, -23.0f));
+	glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+
+	//------------------------- END Hedge borders ----------------------------------
+
+	// Right Side
+	for (int i = 0; i < 7; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(9.0f, 0.0f, -1.0f-i));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(10.0f + i, 0.0f, -7.0f));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(14.0f, 0.0f, -8.0f-i));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(11.0f + i, 0.0f, -10.0f));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+	// Left Side
+
+	for (int i = 0; i < 2; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(7.0f, 0.0f, -2.0f - i));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(2.0f + i, 0.0f, -3.0f));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(2.0f, 0.0f, -4.0 - i));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f + i, 0.0f, -5.0));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 0.0f, -6.0 - i));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+
+	for (int i = 0; i < 3; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, hedgeTx);
+		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(2.0f + i, 0.0f, -7.0f));
+		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	}
+
+	// End Hedge Maze
+	glBindTexture(GL_TEXTURE_2D, brickTx);
 	g_clonedCone.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
 	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 1.0f, -2.0f));
 	glDrawElements(GL_TRIANGLES, g_clonedCone.NumIndices(), GL_UNSIGNED_SHORT, 0);

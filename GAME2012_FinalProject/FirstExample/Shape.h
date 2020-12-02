@@ -13,6 +13,9 @@ struct Shape
 	vector<GLfloat> shape_vertices;
 	vector<GLfloat> shape_colors;
 	vector<GLfloat> shape_uvs;
+	// uv for hedges
+	vector<GLfloat> hedge_uvs_long;
+	vector<GLfloat> hedge_uvs_wide;
 	vector<GLfloat> shape_normals;
 	Material shape_mat = { 1.0f, 32 };
 
@@ -84,6 +87,70 @@ struct Shape
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0); 
 	}
+
+	void BufferLongHedge(GLuint* ibo, GLuint* points_vbo, GLuint* colors_vbo, GLuint* uv_vbo, GLuint* normals_vbo, GLuint& program)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ibo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(shape_indices[0]) * shape_indices.size(), &shape_indices.front(), GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, *points_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_vertices[0]) * shape_vertices.size(), &shape_vertices.front(), GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(shape_vertices[0]) * 3, 0);
+		glEnableVertexAttribArray(0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, *colors_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_colors[0]) * shape_colors.size(), &shape_colors.front(), GL_STATIC_DRAW);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, *uv_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(hedge_uvs_long[0]) * hedge_uvs_long.size(), &hedge_uvs_long.front(), GL_STATIC_DRAW);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(2);
+
+		glBindBuffer(GL_ARRAY_BUFFER, *normals_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_normals[0]) * shape_normals.size(), &shape_normals.front(), GL_STATIC_DRAW);
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(3);
+
+		glUniform1f(glGetUniformLocation(program, "mat.specularStrength"), shape_mat.specularStrength);
+		glUniform1f(glGetUniformLocation(program, "mat.shininess"), shape_mat.shininess);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void BufferWideHedge(GLuint* ibo, GLuint* points_vbo, GLuint* colors_vbo, GLuint* uv_vbo, GLuint* normals_vbo, GLuint& program)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ibo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(shape_indices[0]) * shape_indices.size(), &shape_indices.front(), GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, *points_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_vertices[0]) * shape_vertices.size(), &shape_vertices.front(), GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(shape_vertices[0]) * 3, 0);
+		glEnableVertexAttribArray(0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, *colors_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_colors[0]) * shape_colors.size(), &shape_colors.front(), GL_STATIC_DRAW);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, *uv_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(hedge_uvs_wide[0]) * hedge_uvs_wide.size(), &hedge_uvs_wide.front(), GL_STATIC_DRAW);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(2);
+
+		glBindBuffer(GL_ARRAY_BUFFER, *normals_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_normals[0]) * shape_normals.size(), &shape_normals.front(), GL_STATIC_DRAW);
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(3);
+
+		glUniform1f(glGetUniformLocation(program, "mat.specularStrength"), shape_mat.specularStrength);
+		glUniform1f(glGetUniformLocation(program, "mat.shininess"), shape_mat.shininess);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+
 	void ColorShape(GLfloat r, GLfloat g, GLfloat b)
 	{
 		shape_colors.clear();
@@ -221,195 +288,174 @@ struct Cube : public Shape
 {
 	Cube()
 	{
-		// Normal cube, no cloned vertices:
-		shape_indices = {
-			// Front.
-			0, 1, 2,
-			2, 3, 0,
-			// Left.
-			4, 0, 3,
-			3, 7, 4,
-			// Bottom.
-			5, 1, 0,
-			0, 4, 5,
-			// Right.
-			6, 2, 1,
-			1, 5, 6,
-			// Back.
-			7, 6, 5,
-			5, 4, 7,
-			// Top.
-			3, 2, 6,
-			6, 7, 3
-		};
-		shape_vertices = {
-			0.0f, 0.0f, 1.0f,		// 0.
-			1.0f, 0.0f, 1.0f,		// 1.
-			1.0f, 1.0f, 1.0f,		// 2.
-			0.0f, 1.0f, 1.0f,		// 3.
-			0.0f, 0.0f, 0.0f,		// 4.
-			1.0f, 0.0f, 0.0f,		// 5.
-			1.0f, 1.0f, 0.0f,		// 6.
-			0.0f, 1.0f, 0.0f,		// 7.
-		};
-		shape_uvs = {
-			0.0f, 0.0f,		// 0.
-			3.0f, 0.0f,		// 1.
-			3.0f, 1.0f,		// 2.
-			0.0f, 1.0f,		// 3.
-			3.0f, 0.0f,		// 4.
-			0.0f, 0.0f,		// 5.
-			0.0f, 1.0f,		// 6.
-			3.0f, 1.0f		// 7.
-		};
 		// Cube with all separate faces:
 		/*for (int i = 0; i < shape_vertices.size(); i += 3)
 		{
 			shape_uvs.push_back(shape_vertices[i]);
 			shape_uvs.push_back(shape_vertices[i + 1]);
 		}*/
-		//shape_indices = {
-		//	// Front.
-		//	0, 1, 2,
-		//	2, 3, 0,
-		//	// Right.
-		//	4, 5, 6,
-		//	6, 7, 4,
-		//	// Back.
-		//	8, 9, 10,
-		//	10, 11, 8,
-		//	// Left.
-		//	12, 13, 14,
-		//	14, 15, 12,
-		//	// Top.
-		//	16, 17, 18,
-		//	18, 19, 16,
-		//	// Bottom.
-		//	20, 21, 22,
-		//	22, 23, 20
-		//};
-		//shape_vertices = {
-		//	// Front.
-		//	0.0f, 0.0f, 1.0f,		// 0.
-		//	1.0f, 0.0f, 1.0f,		// 1.
-		//	1.0f, 1.0f, 1.0f,		// 2.
-		//	0.0f, 1.0f, 1.0f,		// 3.
-		//	// Right.
-		//	1.0f, 0.0f, 1.0f,		// 1. 4
-		//	1.0f, 0.0f, 0.0f,		// 5. 5
-		//	1.0f, 1.0f, 0.0f,		// 6. 6
-		//	1.0f, 1.0f, 1.0f,		// 2. 7
-		//	// Back.
-		//	1.0f, 0.0f, 0.0f,		// 5. 8
-		//	0.0f, 0.0f, 0.0f,		// 4. 9
-		//	0.0f, 1.0f, 0.0f,		// 7. 10
-		//	1.0f, 1.0f, 0.0f,		// 6. 11
-		//	// Left.
-		//	0.0f, 0.0f, 0.0f,		// 4. 12
-		//	0.0f, 0.0f, 1.0f,		// 0. 13
-		//	0.0f, 1.0f, 1.0f,		// 3. 14
-		//	0.0f, 1.0f, 0.0f,		// 7. 15
-		//	// Top.
-		//	0.0f, 1.0f, 0.0f,		// 7. 16
-		//	0.0f, 1.0f, 1.0f,		// 3. 17
-		//	1.0f, 1.0f, 1.0f,		// 2. 18
-		//	1.0f, 1.0f, 0.0f,		// 6. 19
-		//	// Bottom.
-		//	0.0f, 0.0f, 0.0f,		// 4. 20
-		//	1.0f, 0.0f, 0.0f,		// 5. 21
-		//	1.0f, 0.0f, 1.0f,		// 1. 22
-		//	0.0f, 0.0f, 1.0f		// 0. 23
-		//};
-		//shape_uvs = {
-		//	// Front.
-		//	0.0f, 0.0f, 	// 0.
-		//	3.0f, 0.0f, 	// 1.
-		//	3.0f, 1.0f, 	// 2.
-		//	0.0f, 1.0f,		// 3.
-		//	// Right.
-		//	0.0f, 0.0f, 	// 1.
-		//	1.0f, 0.0f, 	// 5.
-		//	1.0f, 1.0f, 	// 6.
-		//	0.0f, 1.0f,		// 2.
-		//	// Back.
-		//	0.0f, 0.0f, 	// 5.
-		//	3.0f, 0.0f, 	// 4.
-		//	3.0f, 1.0f,		// 7.
-		//	0.0f, 1.0f,		// 6.
-		//	// Left.
-		//	0.0f, 0.0f,		// 4.
-		//	1.0f, 0.0f,		// 0.
-		//	1.0f, 1.0f,		// 3.
-		//	0.0f, 1.0f,		// 7.
-		//	// Top.
-		//	0.0f, 0.0f,		// 7.
-		//	1.0f, 0.0f,		// 3.
-		//	1.0f, 1.0f,		// 2.
-		//	0.0f, 1.0f,		// 6.
-		//	// Bottom.
-		//	0.0f, 0.0f,		// 4.
-		//	1.0f, 0.0f,		// 5.
-		//	1.0f, 1.0f,		// 1.
-		//	0.0f, 1.0f		// 0.
-		//};
+		shape_indices = {
+			// Front.
+			0, 1, 2,
+			2, 3, 0,
+			// Right.
+			4, 5, 6,
+			6, 7, 4,
+			// Back.
+			8, 9, 10,
+			10, 11, 8,
+			// Left.
+			12, 13, 14,
+			14, 15, 12,
+			// Top.
+			16, 17, 18,
+			18, 19, 16,
+			// Bottom.
+			20, 21, 22,
+			22, 23, 20
+		};
+		shape_vertices = {
+			// Front.
+			0.0f, 0.0f, 1.0f,		// 0.
+			1.0f, 0.0f, 1.0f,		// 1.
+			1.0f, 1.0f, 1.0f,		// 2.
+			0.0f, 1.0f, 1.0f,		// 3.
+			// Right.
+			1.0f, 0.0f, 1.0f,		// 1. 4
+			1.0f, 0.0f, 0.0f,		// 5. 5
+			1.0f, 1.0f, 0.0f,		// 6. 6
+			1.0f, 1.0f, 1.0f,		// 2. 7
+			// Back.
+			1.0f, 0.0f, 0.0f,		// 5. 8
+			0.0f, 0.0f, 0.0f,		// 4. 9
+			0.0f, 1.0f, 0.0f,		// 7. 10
+			1.0f, 1.0f, 0.0f,		// 6. 11
+			// Left.
+			0.0f, 0.0f, 0.0f,		// 4. 12
+			0.0f, 0.0f, 1.0f,		// 0. 13
+			0.0f, 1.0f, 1.0f,		// 3. 14
+			0.0f, 1.0f, 0.0f,		// 7. 15
+			// Top.
+			0.0f, 1.0f, 0.0f,		// 7. 16
+			0.0f, 1.0f, 1.0f,		// 3. 17
+			1.0f, 1.0f, 1.0f,		// 2. 18
+			1.0f, 1.0f, 0.0f,		// 6. 19
+			// Bottom.
+			0.0f, 0.0f, 0.0f,		// 4. 20
+			1.0f, 0.0f, 0.0f,		// 5. 21
+			1.0f, 0.0f, 1.0f,		// 1. 22
+			0.0f, 0.0f, 1.0f		// 0. 23
+		};
+		shape_uvs = {
+			// Front.
+			0.0f, 0.0f, 	// 0.
+			1.0f, 0.0f, 	// 1.
+			1.0f, 1.0f, 	// 2.
+			0.0f, 1.0f,		// 3.
+			// Right.
+			0.0f, 0.0f, 	// 1.
+			1.0f, 0.0f, 	// 5.
+			1.0f, 1.0f, 	// 6.
+			0.0f, 1.0f,		// 2.
+			// Back.
+			0.0f, 0.0f, 	// 5.
+			1.0f, 0.0f, 	// 4.
+			1.0f, 1.0f,		// 7.
+			0.0f, 1.0f,		// 6.
+			// Left.
+			0.0f, 0.0f,		// 4.
+			1.0f, 0.0f,		// 0.
+			1.0f, 1.0f,		// 3.
+			0.0f, 1.0f,		// 7.
+			// Top.
+			0.0f, 0.0f,		// 7.
+			1.0f, 0.0f,		// 3.
+			1.0f, 1.0f,		// 2.
+			0.0f, 1.0f,		// 6.
+			// Bottom.
+			0.0f, 0.0f,		// 4.
+			1.0f, 0.0f,		// 5.
+			1.0f, 1.0f,		// 1.
+			0.0f, 1.0f		// 0.
+		};
 
-		// Cube for dice unwrap:
-		//shape_indices = {
-		//	// Front.
-		//	0, 1, 2,
-		//	2, 3, 0,
-		//	// Left.
-		//	12, 0, 3,  //4. 12
-		//	3, 13, 12, //7. 13
-		//	// Bottom.
-		//	9, 1, 0, //4. 8
-		//	0, 8, 9, //5. 9
-		//	// Right.
-		//	6, 2, 1,
-		//	1, 5, 6,
-		//	// Back.
-		//	7, 6, 5,
-		//	5, 4, 7,
-		//	// Top.
-		//	3, 2, 11, // 7. 10
-		//	11, 10, 3 // 6. 11
-		//};
+	
+		// Cube for Hedge Walls
+		hedge_uvs_long = {
+			// Front.
+			0.0f, 0.0f, 	// 0.
+			1.0f, 0.0f, 	// 1.
+			1.0f, 1.0f, 	// 2.
+			0.0f, 1.0f,		// 3.
+			// Right.
+			0.0f, 0.0f, 	// 1.
+			23.0f, 0.0f, 	// 5.
+			23.0f, 1.0f, 	// 6.
+			0.0f, 1.0f,		// 2.
+			// Back.
+			0.0f, 0.0f, 	// 5.
+			1.0f, 0.0f, 	// 4.
+			1.0f, 1.0f,		// 7.
+			0.0f, 1.0f,		// 6.
+			// Left.
+			0.0f, 0.0f,		// 4.
+			23.0f, 0.0f,		// 0.
+			23.0f, 1.0f,		// 3.
+			0.0f, 1.0f,		// 7.
+			// Top.
+			0.0f, 0.0f,		// 7.
+			23.0f, 0.0f,		// 3.
+			23.0f, 1.0f,		// 2.
+			0.0f, 1.0f,		// 6.
+			// Bottom.
+			0.0f, 0.0f,		// 4.
+			1.0f, 0.0f,		// 5.
+			1.0f, 1.0f,		// 1.
+			0.0f, 1.0f		// 0.
+		};
 
-		//shape_vertices = {
-		//	0.0f, 0.0f, 1.0f,        // 0.
-		//	1.0f, 0.0f, 1.0f,        // 1.
-		//	1.0f, 1.0f, 1.0f,        // 2.
-		//	0.0f, 1.0f, 1.0f,        // 3.
-		//	0.0f, 0.0f, 0.0f,        // 4. 
-		//	1.0f, 0.0f, 0.0f,        // 5.
-		//	1.0f, 1.0f, 0.0f,        // 6.
-		//	0.0f, 1.0f, 0.0f,        // 7.
-		//	0.0f, 0.0f, 0.0f,        // 4. 8
-		//	1.0f, 0.0f, 0.0f,        // 5. 9
-		//	0.0f, 1.0f, 0.0f,        // 7. 10
-		//	1.0f, 1.0f, 0.0f,        // 6. 11
-		//	0.0f, 0.0f, 0.0f,        // 4. 12
-		//	0.0f, 1.0f, 0.0f         // 7. 13
-		//};
-		//shape_uvs = {
-		//	0.25f, 0.33f,//0.
-		//	0.5f, 0.33f,  //1.
-		//	0.5f, 0.66f,  //2.
-		//	0.25f, 0.66f, //3.
-		//	1.0f, 0.33f,  //4.
-		//	0.75f, 0.33f, //5.
-		//	0.75f, 0.66f, //6.
-		//	1.0f, 0.66f,  //7.
-		//	0.25f,0.0f,  //8.
-		//	0.5f, 0.0f,   //9.
-		//	0.25f, 1.0f,  //10.
-		//	0.5f, 1.0f,   //11.
-		//	0.0f, 0.33f, //12.
-		//	0.0f, 0.66f   //13. 
-		//};
+		// Cube for Hedge Walls
+		hedge_uvs_wide = {
+			// Front.
+			0.0f, 0.0f, 	// 0.
+			7.0f, 0.0f, 	// 1.
+			7.0f, 1.0f, 	// 2.
+			0.0f, 1.0f,		// 3.
+			// Right.
+			0.0f, 0.0f, 	// 1.
+			1.0f, 0.0f, 	// 5.
+			1.0f, 1.0f, 	// 6.
+			0.0f, 1.0f,		// 2.
+			// Back.
+			0.0f, 0.0f, 	// 5.
+			7.0f, 0.0f, 	// 4.
+			7.0f, 1.0f,		// 7.
+			0.0f, 1.0f,		// 6.
+			// Left.
+			0.0f, 0.0f,		// 4.
+			1.0f, 0.0f,		// 0.
+			1.0f, 1.0f,		// 3.
+			0.0f, 1.0f,		// 7.
+			// Top.
+			0.0f, 0.0f,		// 7.
+			1.0f, 0.0f,		// 3.
+			1.0f, 7.0f,		// 2.
+			0.0f, 7.0f,		// 6.
+			// Bottom.
+			0.0f, 0.0f,		// 4.
+			1.0f, 0.0f,		// 5.
+			1.0f, 1.0f,		// 1.
+			0.0f, 1.0f		// 0.
+		};
+
 		ColorShape(1.0f, 1.0f, 1.0f);
 		CalcAverageNormals(shape_indices, shape_indices.size(), shape_vertices, shape_vertices.size());
 	}
+};
+
+struct ModCube : public Shape
+{
+
 };
 
 struct Prism : public Shape
