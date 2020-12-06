@@ -29,6 +29,6 @@
 *.exe
 *.out
 *.app
-/GAME2012_FinalProject/.vs/FirstExample/v16/Browse.VC.opendb
-/GAME2012_FinalProject/.vs/FirstExample/v16/Browse.VC.db-wal
-/GAME2012_FinalProject/.vs/FirstExample/v16/Browse.VC.db-shm
+/GAME2012_FinalProject/.vs
+/GAME2012_FinalProject/Debug
+/GAME2012_FinalProject/FirstExample/Debug
