@@ -33,6 +33,16 @@ struct PointLight
 	float exponent;
 };
 
+// just under point light
+struct SpotLight		// added spot light
+{
+	Light base;
+	vec3 position;
+	vec3 direction;
+	float edge;			// edge in radians
+};
+
+
 struct Material
 {
 	float specularStrength;
@@ -97,6 +107,24 @@ vec4 calcPointLight(PointLight p)
 	
 	return (colour / attenuation);
 }
+
+// just above main
+vec4 calcSpotLight(SpotLight s)
+{
+	vec4 colour = vec4(0,0,0,0);
+	vec3 rayDirection = normalize(fragPos - s.position);
+	float slFactor = dot(rayDirection, s.direction); // terminator line that shows where the light is gonna cut off
+	if (slFactor > s.edge)
+	{
+		vec3 direction = fragPos - s.position;
+		float distance = length(direction);
+		direction = normalize(direction);
+		colour = calcLightByDirection(s.base, direction);					// pass the color in
+		colour *= (1.0f - (1.0f - slFactor) * (1.0f / (1.0f - s.edge)));	// this calculation does the light blending
+	}
+	return colour;
+}
+
 
 void main()
 {

@@ -108,6 +108,13 @@ Prism g_prism(24);
 Plane g_plane;
 ClonedCone g_clonedCone(12);
 ClonedPrism g_clonedPrism(12);
+// where we set up objects
+Cube test_cube(5.0f, 6.0f, 7.0f);
+
+// creating the struct for shape info, create an std vector after
+struct ShapeInfo {
+
+};
 
 void init(void)
 {
@@ -325,6 +332,13 @@ void display(void)
 	//transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 0.0f, -2.0f));
 	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
 	//	
+
+	// tested the cube in display
+	glBindTexture(GL_TEXTURE_2D, hedgeTx);
+	test_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(0.0f, 5.0f, -23.0f));
+	glDrawElements(GL_TRIANGLES, test_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+
 
 	// Hedge Maze Borders
 	glBindTexture(GL_TEXTURE_2D, hedgeTx);

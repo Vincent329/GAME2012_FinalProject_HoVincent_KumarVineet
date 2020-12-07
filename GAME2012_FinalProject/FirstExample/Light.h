@@ -47,6 +47,49 @@ struct PointLight : public Light
 	}
 };
 
+// ------------------ NEW POINT LIGHTS ----------------------------
+
+//// this is important, make sure to take any changes into the Final Project repo
+//struct PointLight : public Light
+//{
+//	glm::vec3 position; //= glm::vec3(0.0f, 0.0f, 0.0f);
+//	//GLfloat constant, linear, exponent;
+//	/*PointLight(glm::vec3 pos, GLfloat con, GLfloat lin, GLfloat exp,
+//		glm::vec3 dCol, GLfloat dStr) : Light(dCol, dStr)
+//	{
+//		position = pos;
+//		constant = con;
+//		linear = lin;
+//		exponent = exp;
+//	}*/
+//	GLfloat constant, linear, exponent, range;
+//	PointLight(glm::vec3 pos, GLfloat range,
+//		glm::vec3 dCol, GLfloat dStr) : Light(dCol, dStr)
+//	{
+//		position = pos;
+//		constant = 1.0f;
+//		linear = 4.5f / range;
+//		exponent = 75.0f / (range * range);
+//	}
+//};
+
+// ------------------- NEW SPOT LIGHT STRUCT ------------------------
+struct SpotLight : public Light
+{
+	glm::vec3 position;
+	glm::vec3 direction;
+	GLfloat edge, edgeRad;			// calculate the edge in radians
+	SpotLight(glm::vec3 pos, glm::vec3 dCol, GLfloat dStr, glm::vec3 dir,
+		GLfloat e) : Light(dCol, dStr)
+	{
+		position = pos;
+		direction = dir;
+		edge = e;
+		edgeRad = cosf(glm::radians(edge));
+	}
+};
+
+
 struct Material
 {
 	GLfloat specularStrength;

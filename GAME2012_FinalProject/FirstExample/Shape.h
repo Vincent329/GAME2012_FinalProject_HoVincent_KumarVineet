@@ -34,29 +34,6 @@ struct Shape
 	}
 	GLsizei NumIndices() { return shape_indices.size(); }
 
-	void BufferGrid(GLuint* ibo, GLuint* points_vbo, GLuint* colors_vbo, GLuint* uv_vbo)
-	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(shape_indices[0]) * shape_indices.size(), &shape_indices.front(), GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *points_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_vertices[0]) * shape_vertices.size(), &shape_vertices.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(shape_vertices[0]) * 3, 0);
-		glEnableVertexAttribArray(0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *colors_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_colors[0]) * shape_colors.size(), &shape_colors.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(1);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *uv_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_uvs[0]) * shape_uvs.size(), &shape_uvs.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(2);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
-
 	void BufferShape(GLuint* ibo, GLuint* points_vbo, GLuint* colors_vbo, GLuint* uv_vbo, GLuint* normals_vbo, GLuint& program)
 	{
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ibo);
@@ -448,6 +425,99 @@ struct Cube : public Shape
 			0.0f, 1.0f		// 0.
 		};
 
+		ColorShape(1.0f, 1.0f, 1.0f);
+		CalcAverageNormals(shape_indices, shape_indices.size(), shape_vertices, shape_vertices.size());
+	}
+
+	// Cube Constructor, place underneath the original constructor
+	Cube(float length, float width, float height)
+	{
+		shape_indices = {
+			// Front.
+			0, 1, 2,
+			2, 3, 0,
+			// Right.
+			4, 5, 6,
+			6, 7, 4,
+			// Back.
+			8, 9, 10,
+			10, 11, 8,
+			// Left.
+			12, 13, 14,
+			14, 15, 12,
+			// Top.
+			16, 17, 18,
+			18, 19, 16,
+			// Bottom.
+			20, 21, 22,
+			22, 23, 20
+		};
+
+		shape_vertices = {
+			// Front.
+					0.0f * width, 0.0f * height, 1.0f * length,		// 0.
+					1.0f * width, 0.0f * height, 1.0f * length,		// 1.
+					1.0f * width, 1.0f * height, 1.0f * length,		// 2.
+					0.0f * width, 1.0f * height, 1.0f * length,		// 3.
+			// Right.	* width		  * height		 * length
+					1.0f * width, 0.0f * height, 1.0f * length,		// 1. 4
+					1.0f * width, 0.0f * height, 0.0f * length,		// 5. 5
+					1.0f * width, 1.0f * height, 0.0f * length,		// 6. 6
+					1.0f * width, 1.0f * height, 1.0f * length,		// 2. 7
+			// Back.	* width		  * height		 * length
+					1.0f * width, 0.0f * height, 0.0f * length,		// 5. 8
+					0.0f * width, 0.0f * height, 0.0f * length,		// 4. 9
+					0.0f * width, 1.0f * height, 0.0f * length,		// 7. 10
+					1.0f * width, 1.0f * height, 0.0f * length,		// 6. 11
+			// Left.	* width		  * height		 * length
+					0.0f * width, 0.0f * height, 0.0f * length,		// 4. 12
+					0.0f * width, 0.0f * height, 1.0f * length,		// 0. 13
+					0.0f * width, 1.0f * height, 1.0f * length,		// 3. 14
+					0.0f * width, 1.0f * height, 0.0f * length,		// 7. 15
+			// Top.		* width		  * height		 * length
+					0.0f * width, 1.0f * height, 0.0f * length,		// 7. 16
+					0.0f * width, 1.0f * height, 1.0f * length,		// 3. 17
+					1.0f * width, 1.0f * height, 1.0f * length,		// 2. 18
+					1.0f * width, 1.0f * height, 0.0f * length,		// 6. 19
+			// Bottom.	* width		  * height		 * length
+					0.0f * width, 0.0f * height, 0.0f * length,		// 4. 20
+					1.0f * width, 0.0f * height, 0.0f * length,		// 5. 21
+					1.0f * width, 0.0f * height, 1.0f * length,		// 1. 22
+					0.0f * width, 0.0f * height, 1.0f * length		// 0. 23
+		};
+
+		shape_uvs = {
+			// Front.
+			0.0f * width, 0.0f * height, 	// 0.
+			1.0f * width, 0.0f * height, 	// 1.
+			1.0f * width, 1.0f * height, 	// 2.
+			0.0f * width, 1.0f * height,		// 3.
+			// Right.  
+			0.0f * length, 0.0f * height, 	// 1.
+			1.0f * length, 0.0f * height, 	// 5.
+			1.0f * length, 1.0f * height, 	// 6.
+			0.0f * length, 1.0f * height,		// 2.
+			// Back.  
+			0.0f * width, 0.0f * height, 	// 5.
+			1.0f * width, 0.0f * height, 	// 4.
+			1.0f * width, 1.0f * height,		// 7.
+			0.0f * width, 1.0f * height,		// 6.
+			// Left.   
+			0.0f * length, 0.0f * height,		// 4.
+			1.0f * length, 0.0f * height,		// 0.
+			1.0f * length, 1.0f * height,		// 3.
+			0.0f * length, 1.0f * height,		// 7.
+			// Top.
+			0.0f * length, 0.0f * width,		// 7.
+			1.0f * length, 0.0f * width,		// 3.
+			1.0f * length, 1.0f * width,		// 2.
+			0.0f * length, 1.0f * width,		// 6.
+			// Bottom.
+			0.0f * length, 0.0f * width,		// 4.
+			1.0f * length, 0.0f * width,		// 5.
+			1.0f * length, 1.0f * width,		// 1.
+			0.0f * length, 1.0f * width		// 0.
+		};
 		ColorShape(1.0f, 1.0f, 1.0f);
 		CalcAverageNormals(shape_indices, shape_indices.size(), shape_vertices, shape_vertices.size());
 	}
