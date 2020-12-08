@@ -113,8 +113,76 @@ Cube test_cube(5.0f, 6.0f, 7.0f);
 
 // creating the struct for shape info, create an std vector after
 struct ShapeInfo {
-
+	Shape shape;
+	glm::vec3 scale;
+	glm::vec3 color;
+	glm::vec3 position;
+	GLuint textureID;
+	glm::vec3 rotAxis;
+	float rotAngle;
 };
+
+std::vector<ShapeInfo> Shapes;
+
+void createCube(float scale, glm::vec3 pos, float l, float w, float h, GLuint id, glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS,  float angle = 0.0f)
+{
+	ShapeInfo s;
+	s.shape = Cube(l, w, h);
+	s.scale = glm::vec3(scale, scale, scale);
+	s.color = c;
+	s.position = pos;
+	s.textureID = id;
+	s.rotAxis = rot;
+	s.rotAngle = angle;
+	Shapes.push_back(s);	
+}
+
+//---------------------------------------------------------------------
+//
+// calculateView
+//
+void calculateView()
+{
+	frontVec.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	frontVec.y = sin(glm::radians(pitch));
+	frontVec.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	frontVec = glm::normalize(frontVec);
+	rightVec = glm::normalize(glm::cross(frontVec, worldUp));
+	upVec = glm::normalize(glm::cross(rightVec, frontVec));
+
+	View = glm::lookAt(
+		position, // Camera position
+		position + frontVec, // Look target
+		upVec); // Up vector
+	glUniform3f(glGetUniformLocation(program, "eyePosition"), position.x, position.y, position.z);
+}
+
+//---------------------------------------------------------------------
+//
+// transformModel
+//
+void transformObject(glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngle, glm::vec3 translation) {
+	glm::mat4 Model;
+	Model = glm::mat4(1.0f);
+	Model = glm::translate(Model, translation);
+	Model = glm::rotate(Model, glm::radians(rotationAngle), rotationAxis);
+	Model = glm::scale(Model, scale);
+
+	calculateView();
+	glUniformMatrix4fv(modelID, 1, GL_FALSE, &Model[0][0]);
+	glUniformMatrix4fv(viewID, 1, GL_FALSE, &View[0][0]);
+	glUniformMatrix4fv(projID, 1, GL_FALSE, &Projection[0][0]);
+}
+
+
+void DrawShape(ShapeInfo& sInfo, GLenum mode = GL_TRIANGLES)
+{
+	glBindTexture(GL_TEXTURE_2D, sInfo.textureID);
+	sInfo.shape.ColorShape(sInfo.color.x, sInfo.color.y, sInfo.color.z);
+	sInfo.shape.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(sInfo.scale, sInfo.rotAxis, sInfo.rotAngle, sInfo.position);
+	glDrawElements(mode, sInfo.shape.NumIndices(), GL_UNSIGNED_SHORT, 0);
+}
 
 void init(void)
 {
@@ -201,7 +269,6 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
 	// Setting ambient Light.
@@ -247,6 +314,65 @@ void init(void)
 	// Change shape data.
 	g_prism.SetMat(0.1, 16);
 
+	// ------------------------- BEGIN HEDGE MAZE -----------------------------
+
+	// Left Side
+	createCube(1.0f, glm::vec3(2.0f, 0.0f, -3.0f), 1.0f, 6.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(7.0f, 0.0f, -2.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(2.0f, 0.0f, -5.0f), 2.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(5.0f, 0.0f, -5.0f), 1.0f, 4.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(5.0f, 0.0f, -7.0f), 2.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(2.0f, 0.0f, -7.0f), 1.0f, 3.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(2.0f, 0.0f, -14.0f), 6.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(1.0f, 0.0f, -14.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(4.0f, 0.0f, -11.0f), 3.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(5.0f, 0.0f, -11.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(5.0f, 0.0f, -13.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(4.0f, 0.0f, -16.0f), 4.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(6.0f, 0.0f, -9.0f), 1.0f, 3.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(7.0f, 0.0f, -8.0f), 2.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(6.0f, 0.0f, -16.0f), 7.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(2.0f, 0.0f, -16.0f), 1.0f, 2.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(2.0f, 0.0f, -16.0f), 1.0f, 2.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(2.0f, 0.0f, -17.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(2.0f, 0.0f, -18.0f), 1.0f, 6.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(1.0f, 0.0f, -21.0f), 1.0f, 4.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(6.0f, 0.0f, -20.0f), 1.0f, 4.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(9.0f, 0.0f, -22.0f), 2.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(7.0f, 0.0f, -15.0f), 1.0f, 2.0f, 1.0f, hedgeTx);
+
+	// middle
+	createCube(1.0f, glm::vec3(9.0f, 0.0f, -7.0f), 7.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(9.0f, 0.0f, -17.0f), 1.0f, 3.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(11.0f, 0.0f, -18.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(11.0f, 0.0f, -19.0f), 1.0f, 3.0f, 1.0f, hedgeTx);
+
+	// right side
+	createCube(1.0f, glm::vec3(11.0f, 0.0f, -5.0f), 4.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(12.0f, 0.0f, -5.0f), 1.0f, 5.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(13.0f, 0.0f, -3.0f), 1.0f, 4.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(16.0f, 0.0f, -4.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(10.0f, 0.0f, -7.0f), 1.0f, 5.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(14.0f, 0.0f, -8.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(10.0f, 0.0f, -9.0f), 1.0f, 5.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(12.0f, 0.0f, -14.0f), 5.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(10.0f, 0.0f, -15.0f), 1.0f, 4.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(13.0f, 0.0f, -17.0f), 2.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(16.0f, 0.0f, -11.0f), 5.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(14.0f, 0.0f, -11.0f), 1.0f, 2.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(14.0f, 0.0f, -12.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(14.0f, 0.0f, -13.0f), 1.0f, 4.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(15.0f, 0.0f, -15.0f), 1.0f, 3.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(15.0f, 0.0f, -16.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(15.0f, 0.0f, -17.0f), 1.0f, 2.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(15.0f, 0.0f, -19.0f), 1.0f, 3.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(15.0f, 0.0f, -19.0f), 1.0f, 3.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(16.0f, 0.0f, -20.0f), 1.0f, 1.0f, 1.0f, hedgeTx);
+	createCube(1.0f, glm::vec3(11.0f, 0.0f, -21.0f), 1.0f, 6.0f, 1.0f, hedgeTx);
+
+	// ------------------------ End Hedge Maze --------------------------------
+
+
 	// Enable depth test and blend.
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -258,47 +384,8 @@ void init(void)
 	timer(0); 
 }
 
-//---------------------------------------------------------------------
-//
-// calculateView
-//
-void calculateView()
-{
-	frontVec.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	frontVec.y = sin(glm::radians(pitch));
-	frontVec.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	frontVec = glm::normalize(frontVec);
-	rightVec = glm::normalize(glm::cross(frontVec, worldUp));
-	upVec = glm::normalize(glm::cross(rightVec, frontVec));
 
-	View = glm::lookAt(
-		position, // Camera position
-		position + frontVec, // Look target
-		upVec); // Up vector
-	glUniform3f(glGetUniformLocation(program, "eyePosition"), position.x, position.y, position.z);
-}
 
-//---------------------------------------------------------------------
-//
-// transformModel
-//
-void transformObject(glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngle, glm::vec3 translation) {
-	glm::mat4 Model;
-	Model = glm::mat4(1.0f);
-	Model = glm::translate(Model, translation);
-	Model = glm::rotate(Model, glm::radians(rotationAngle), rotationAxis);
-	Model = glm::scale(Model, scale);
-	
-	calculateView();
-	glUniformMatrix4fv(modelID, 1, GL_FALSE, &Model[0][0]);
-	glUniformMatrix4fv(viewID, 1, GL_FALSE, &View[0][0]);
-	glUniformMatrix4fv(projID, 1, GL_FALSE, &Projection[0][0]);
-}
-
-void drawObjects()
-{
-
-}
 //---------------------------------------------------------------------
 //
 // display
@@ -334,11 +421,6 @@ void display(void)
 	//	
 
 	// tested the cube in display
-	glBindTexture(GL_TEXTURE_2D, hedgeTx);
-	test_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(0.0f, 5.0f, -23.0f));
-	glDrawElements(GL_TRIANGLES, test_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-
 
 	// Hedge Maze Borders
 	glBindTexture(GL_TEXTURE_2D, hedgeTx);
@@ -373,91 +455,11 @@ void display(void)
 
 	//------------------------- END Hedge borders ----------------------------------
 
-	// Right Side
-	for (int i = 0; i < 7; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(9.0f, 0.0f, -1.0f-i));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	// Draw all the shapes
+	for (std::vector<ShapeInfo>::iterator it = Shapes.begin(); it != Shapes.end(); ++it) {
+		DrawShape(*it);
 	}
 
-	for (int i = 0; i < 5; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(10.0f + i, 0.0f, -7.0f));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(14.0f, 0.0f, -8.0f-i));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(11.0f + i, 0.0f, -10.0f));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	}
-
-	// Left Side
-
-	for (int i = 0; i < 2; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(7.0f, 0.0f, -2.0f - i));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	}
-
-	for (int i = 0; i < 5; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(2.0f + i, 0.0f, -3.0f));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(2.0f, 0.0f, -4.0 - i));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f + i, 0.0f, -5.0));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 0.0f, -6.0 - i));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	}
-
-
-	for (int i = 0; i < 3; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, hedgeTx);
-		g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-		transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(2.0f + i, 0.0f, -7.0f));
-		glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	}
-
-	// End Hedge Maze
 	glBindTexture(GL_TEXTURE_2D, brickTx);
 	g_clonedCone.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
 	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 1.0f, -2.0f));
