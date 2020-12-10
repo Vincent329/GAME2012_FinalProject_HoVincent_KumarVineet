@@ -1,5 +1,9 @@
 #version 430 core
 
+#ifndef NUM_POINT_LIGHTS
+	#define NUM_POINT_LIGHTS 4
+#endif
+
 in vec3 colour;
 in vec2 texCoord;
 in vec3 normal;
@@ -55,24 +59,25 @@ uniform vec3 eyePosition;
 
 uniform AmbientLight aLight;
 uniform DirectionalLight dLight;
-uniform PointLight pLight; // MUST PASS AN ARRAY OF POINT LIGHTS
+uniform PointLight pLights[NUM_POINT_LIGHTS];
+uniform SpotLight sLight;
 uniform Material mat;
 
 vec4 calcLightByDirection(Light l, vec3 dir)
 {
-	// lambert's cosine law here, 
-	// dotproduct of the normal and the direction (normalized)
-	float diffuseFactor = max(dot(normalize(normal),normalize(dir)), 0.0f); // Lambert's Cosine Law.
+																				// lambert's cosine law here, 
+																				// dotproduct of the normal and the direction (normalized)
+	float diffuseFactor = max(dot(normalize(normal),normalize(dir)), 0.0f);		// Lambert's Cosine Law.
 	
-	// the color itself, the color of the light * strength of light * factor
-	// the diffuse factor is different because every normal is different
+																		// the color itself, the color of the light * strength of light * factor
+																		// the diffuse factor is different because every normal is different
 	vec4 diffuse = vec4(l.diffuseColour, 1.0f) * l.diffuseStrength * diffuseFactor;
 
 	// start off with a blank color
 	vec4 specular = vec4(0,0,0,0);
 
-	// the terminator line, 
-	// only calculate the specular if the factor is greater than 0, and if there's a factor (no light if no diffuse strength)
+																// the terminator line, 
+																// only calculate the specular if the factor is greater than 0, and if there's a factor (no light if no diffuse strength)
 	if (diffuseFactor > 0.0f && l.diffuseStrength > 0.0f)
 	{
 		vec3 fragToEye = normalize(eyePosition - fragPos);
@@ -133,7 +138,10 @@ void main()
 	vec4 ambient = vec4(aLight.ambientColour, 1.0f) * aLight.ambientStrength;
 	calcColour += ambient;
 	calcColour += calcDirectionalLight();
-	calcColour += calcPointLight(pLight);
-	
+	for (int i = 0; i < NUM_POINT_LIGHTS; i++)
+	{
+		calcColour += calcPointLight(pLights[i]);
+	}
+	//calcColour += calcSpotLight;
 	frag_colour = texture(texture0, texCoord) * vec4(colour, 1.0f) * calcColour;
 }
