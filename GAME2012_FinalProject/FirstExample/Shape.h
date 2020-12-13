@@ -65,69 +65,6 @@ struct Shape
 			glBindBuffer(GL_ARRAY_BUFFER, 0); 
 	}
 
-	void BufferLongHedge(GLuint* ibo, GLuint* points_vbo, GLuint* colors_vbo, GLuint* uv_vbo, GLuint* normals_vbo, GLuint& program)
-	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(shape_indices[0]) * shape_indices.size(), &shape_indices.front(), GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *points_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_vertices[0]) * shape_vertices.size(), &shape_vertices.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(shape_vertices[0]) * 3, 0);
-		glEnableVertexAttribArray(0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *colors_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_colors[0]) * shape_colors.size(), &shape_colors.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(1);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *uv_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(hedge_uvs_long[0]) * hedge_uvs_long.size(), &hedge_uvs_long.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(2);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *normals_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_normals[0]) * shape_normals.size(), &shape_normals.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(3);
-
-		glUniform1f(glGetUniformLocation(program, "mat.specularStrength"), shape_mat.specularStrength);
-		glUniform1f(glGetUniformLocation(program, "mat.shininess"), shape_mat.shininess);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
-
-	void BufferWideHedge(GLuint* ibo, GLuint* points_vbo, GLuint* colors_vbo, GLuint* uv_vbo, GLuint* normals_vbo, GLuint& program)
-	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(shape_indices[0]) * shape_indices.size(), &shape_indices.front(), GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *points_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_vertices[0]) * shape_vertices.size(), &shape_vertices.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(shape_vertices[0]) * 3, 0);
-		glEnableVertexAttribArray(0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *colors_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_colors[0]) * shape_colors.size(), &shape_colors.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(1);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *uv_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(hedge_uvs_wide[0]) * hedge_uvs_wide.size(), &hedge_uvs_wide.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(2);
-
-		glBindBuffer(GL_ARRAY_BUFFER, *normals_vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(shape_normals[0]) * shape_normals.size(), &shape_normals.front(), GL_STATIC_DRAW);
-		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(3);
-
-		glUniform1f(glGetUniformLocation(program, "mat.specularStrength"), shape_mat.specularStrength);
-		glUniform1f(glGetUniformLocation(program, "mat.shininess"), shape_mat.shininess);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
-
-
 	void ColorShape(GLfloat r, GLfloat g, GLfloat b)
 	{
 		shape_colors.clear();
