@@ -1,14 +1,10 @@
 ﻿//***************************************************************************
-// GAME2012_A4_HoVincent.cpp by Vincent Ho (C) 2020 All Rights Reserved.
+// GAME2012_FinalProject_HoVincent_KumarVineet.cpp by Vincent Ho and Vineet Kumar (C) 2020 All Rights Reserved.
 //
-// Assignment 4 submission.
+// Final Project Submission
 //
 // Description:
-// Lighting Example where a point light source is overhead a plane
-// use WASD to move camera, and R and F to go up and down. Click mouse and drag to orient camera rotation
-// IJKL will move the camera forward, left, down, and right respectively
-//
-// Repo Change check - is repo pushing correctly? - Vineet
+// 
 //*****************************************************************************
 
 
@@ -501,6 +497,9 @@ void init(void)
 
 	// ------------------------ Castle Walls --------------------------------
 	placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-1.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
+	//placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
+	
 
 	// ------------------------ Castle Corners --------------------------------
 	placeCylinder(glm::vec3(-0.7f, 0.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
@@ -508,7 +507,7 @@ void init(void)
 	placeCylinder(glm::vec3(-0.7f, 2.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
 	placeCylinder(glm::vec3(-0.7f, 3.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
 	placeCylinder(glm::vec3(-0.7f, 4.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	placeCone(glm::vec3(-0.7f, 5.0f, 0.1f), 10, 1, castleWallsTx, { 1.0f,1.0f,1.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(-1.2f, 5.0f, -0.4f), 10, 1, castleWallsTx, { 2.0f,2.0f,2.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 	
 
 	// Enable depth test and blend.
@@ -561,7 +560,7 @@ void display(void)
 		//std::cout << "Shapes size = " << Shapes.size() << std::endl;
 		keyPosition_1 = { 15.25f, 0.0f, -12.0f };
 	
-		placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
+		//placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
 
 		if (abs(position.x - keyPosition_1.x) < 2.0f && abs(position.z - keyPosition_1.z) < 2.0f && abs(position.y - keyPosition_1.y) < 2.0f)
 		{
@@ -593,13 +592,14 @@ void display(void)
 
 	if (keyDeposited_1)
 	{
-		placeCube(depositPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1.0f);
+		//placeCube(depositPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1.0f);
 		//std::cout << "Ready to Go !" << std::endl;
 	}
 
 	// Draw all the shapes
 	for (std::vector<ShapeInfo>::iterator it = Shapes.begin(); it != Shapes.end(); ++it) {
 		DrawShape(*it);
+		std::cout << Shapes.size() << std::endl;
 	}
 
 
