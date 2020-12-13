@@ -450,10 +450,10 @@ struct Cube : public Shape
 			1.0f * length, 1.0f * width,		// 2.
 			0.0f * length, 1.0f * width,		// 6.
 			// Bottom.
-			0.0f * length, 0.0f * width,		// 4.
-			1.0f * length, 0.0f * width,		// 5.
-			1.0f * length, 1.0f * width,		// 1.
-			0.0f * length, 1.0f * width		// 0.
+			0.0f * width, 0.0f * length,		// 4.
+			1.0f * width, 0.0f * length,		// 5.
+			1.0f * width, 1.0f * length,		// 1.
+			0.0f * width, 1.0f * length		    // 0.
 		};
 		ColorShape(1.0f, 1.0f, 1.0f);
 		CalcAverageNormals(shape_indices, shape_indices.size(), shape_vertices, shape_vertices.size());
