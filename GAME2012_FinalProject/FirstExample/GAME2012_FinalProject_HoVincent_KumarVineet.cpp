@@ -496,19 +496,24 @@ void init(void)
 
 
 	// ------------------------ Castle Walls --------------------------------
-	placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
-	placeCube(glm::vec3(-1.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
-	placeCube(glm::vec3(-1.0f, 4.25f, -0.75f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
-	//placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
-	
+	//Left 
+	placeCube(glm::vec3(-2.0f, 0.0f, -22.75f), 23.0f, 1.5f, 4.0f, castleWallsTx, 1.0f);
 
+	placeCube(glm::vec3(-1.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-2.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
+
+	// battlements - merlons and crenels
+	float merlon_1 = -0.75f;
+	for(int i = 0; i < 16; i++, merlon_1 -= 1.5f)
+	{
+		placeCube(glm::vec3(-1.0f, 4.25f, merlon_1), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+		placeCube(glm::vec3(-2.0f, 4.25f, merlon_1), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+	}
 	// ------------------------ Castle Corners --------------------------------
-	placeCylinder(glm::vec3(-0.75f, 0.0f, 0.1f), 12, 5, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	/*placeCylinder(glm::vec3(-0.7f, 1.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	placeCylinder(glm::vec3(-0.7f, 2.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	placeCylinder(glm::vec3(-0.7f, 3.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	placeCylinder(glm::vec3(-0.7f, 4.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);*/
-	placeCone(glm::vec3(-1.25f, 5.0f, -0.4f), 10, 2, castleWallsTx, { 2.0f,1.0f,2.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCylinder(glm::vec3(-2.25f, 0.0f, -0.1f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(-2.75f, 5.0f, -0.5f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCylinder(glm::vec3(-2.25f, 0.0f, -24.25f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(-2.75f, 5.0f, -25.0f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 	
 
 	// Enable depth test and blend.
