@@ -109,11 +109,11 @@ void timer(int);
 
 void resetView()
 {
-	position = glm::vec3(5.0f, 3.0f, 10.0f);
-	frontVec = glm::vec3(0.0f, 0.0f, -1.0f);
+	position = glm::vec3(9.5f, 7.0f, -40.0f);
+	frontVec = glm::vec3(0.0f, 0.0f, 1.0f);
 	worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	pitch = 0.0f;
-	yaw = -90.0f;
+	pitch = -15.0f;
+	yaw = 90.0f;
 	// View will now get set only in transformObject
 }
 
@@ -122,8 +122,6 @@ Grid g_grid(40);
 Cube g_cube;
 Prism g_prism(24);
 Plane g_plane;
-ClonedCone g_clonedCone(12,3);
-ClonedPrism g_clonedPrism(12,3);
 
 // where we set up objects
 Cube test_cube(5.0f, 6.0f, 7.0f);
@@ -386,6 +384,7 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	stbi_image_free(image6);
 
 	// Castle Walls Key
 	unsigned char* image7 = stbi_load("tx_brick_bright.jpg", &width, &height, &bitDepth, 0);
@@ -398,6 +397,20 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	stbi_image_free(image7);
+
+	// Castle Walls Key
+	unsigned char* image8 = stbi_load("tx_wood_raw.jpg", &width, &height, &bitDepth, 0);
+	if (!image8) cout << "Unable to load file!" << endl;
+
+	glGenTextures(1, &doorTx);
+	glBindTexture(GL_TEXTURE_2D, doorTx);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image8);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	stbi_image_free(image8);
 
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
@@ -514,6 +527,7 @@ void init(void)
 		placeCube(glm::vec3(-1.0f, 4.25f, merlon_1), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
 		placeCube(glm::vec3(-2.0f, 4.25f, merlon_1), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
 	}
+
 	// ------------------------ Castle Corners --------------------------------
 	placeCylinder(glm::vec3(-2.25f, 0.0f, -0.1f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 	placeCone(glm::vec3(-2.75f, 5.0f, -0.5f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
@@ -527,20 +541,37 @@ void init(void)
 	//placeCylinder(glm::vec3(-0.7f, 4.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
 	//placeCone(glm::vec3(-1.2f, 5.0f, -0.4f), 10, 1, castleWallsTx, { 2.0f,2.0f,2.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 	//
+
+	// ------------------------- Vince -----------------
 	// ------------------------- Back Wall and Gatehouse -----------------------------
 	placeCube(glm::vec3(-1.0f, 0.0f, -26.5f), 1.5f, 9.0f, 4.0f, castleWallsTx, 1.0f);
 	placeCube(glm::vec3(11.0f, 0.0f, -26.5f), 1.5f, 9.0f, 4.0f, castleWallsTx, 1.0f);
-	placeCube(glm::vec3(3.0f, 0.0f,  -27.5f), 1.0f, 4.0f, 5.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(3.0f, 0.0f, -27.5f), 1.0f, 4.0f,  5.0f, castleWallsTx, 1.0f);
 	placeCube(glm::vec3(12.0f, 0.0f, -27.5f), 1.0f, 4.0f, 5.0f, castleWallsTx, 1.0f);
-	placeCube(glm::vec3(5.0f, 0.0f,  -29.5f), 2.0f, 2.0f, 5.0f, castleWallsTx, 1.0f);
-	placeCube(glm::vec3(12.0f, 0.0f, -29.5f), 2.0f, 2.0f, 5.0f, castleWallsTx, 1.0f);
-	placeCube(glm::vec3(7.0f, 3.0f,  -26.5f), 1.5f, 5.0f, 1.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(5.0f, 0.0f,  -29.0f), 1.5f, 2.0f, 5.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(12.0f, 0.0f, -29.0f), 1.5f, 2.0f, 5.0f, castleWallsTx, 1.0f);
+	placeCylinder(glm::vec3(5.0f, 0.0f, -30.0f), 8,  5, castleWallsTx, glm::vec3(2.0f, 1.0f, 2.0f));
+	placeCylinder(glm::vec3(12.0f, 0.0f, -30.0f), 8, 5, castleWallsTx, glm::vec3(2.0f, 1.0f, 2.0f));
+	placeCube(glm::vec3(7.0f,  4.0f,  -26.5f), 1.5f, 5.0f, 1.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(8.0f,  3.0f, -26.5f), 1.5f, 0.5f, 1.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(10.5f, 3.0f, -26.5f), 1.5f, 0.5f, 1.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(8.5f,  3.5f, -26.5f), 1.5f, 0.5f, 0.5f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(10.0f, 3.5f, -26.5f), 1.5f, 0.5f, 0.5f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(6.0f,  4.0f, -26.5f), 1.5f, 1.0f, 0.5f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(12.0f, 4.0f, -26.5f), 1.5f, 1.0f, 0.5f, castleWallsTx, 1.0f);
+
+	// separator
+	placeCube(glm::vec3(9.48f, 1.0f, -26.05f), 0.35f, 0.02f, 4.0f, blankTx, 1.0f);
+
 
 	// ------------------------- Stairs -------------------------------
-	placeCube(glm::vec3(8.0f, 0.0f, -24.0f), 1.0f, 3.0f, 0.25f, stoneTx, 1.0f);
-	placeCube(glm::vec3(7.0f, 0.0f, -25.0f), 1.0f, 5.0f, 0.5f, stoneTx, 1.0f);
-	placeCube(glm::vec3(8.0f, 0.0f, -27.0f), 2.0f, 3.0f, 0.5f, stoneTx, 1.0f);
-	placeCube(glm::vec3(8.0f, 0.0f, -28.0f), 2.0f, 3.0f, 0.25f, stoneTx, 1.0f);
+	placeCube(glm::vec3(8.0f, 0.0f, -24.0f), 1.0f, 3.0f, 0.5f, stoneTx, 1.0f);
+	placeCube(glm::vec3(7.0f, 0.0f, -25.0f), 1.0f, 5.0f, 1.0f, stoneTx, 1.0f);
+	placeCube(glm::vec3(8.0f, 0.0f, -27.0f), 2.0f, 3.0f, 1.0f, stoneTx, 1.0f);
+	placeCube(glm::vec3(8.0f, 0.0f, -28.0f), 2.0f, 3.0f, 0.5f, stoneTx, 1.0f);
+
+	// door
+	placeCube(glm::vec3(8.0f, 1.0f, -26.0f), 0.25f, 3.0f, 3.0f, doorTx, 1.0f);
 
 
 	// Enable depth test and blend.
@@ -634,18 +665,6 @@ void display(void)
 		DrawShape(*it);
 		//std::cout << Shapes.size() << std::endl;
 	}
-
-
-
-	glBindTexture(GL_TEXTURE_2D, brickTx);
-	g_clonedCone.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 1.0f, -2.0f));
-	glDrawElements(GL_TRIANGLES, g_clonedCone.NumIndices(), GL_UNSIGNED_SHORT, 0);
-
-	glBindTexture(GL_TEXTURE_2D, brickTx);
-	g_clonedPrism.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(3.0f, 1.0f, -2.0f));
-	glDrawElements(GL_TRIANGLES, g_clonedPrism.NumIndices(), GL_UNSIGNED_SHORT, 0);
 
 	glBindVertexArray(0); // Done writing.
 	glutSwapBuffers(); // Now for a potentially smoother render.
