@@ -67,7 +67,7 @@ GLfloat pitch, yaw;
 int lastX, lastY;
 
 // Texture variables.
-GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx, bonusKeyTx;
+GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx, bonusKeyTx, castleWallsTx;
 GLint width, height, bitDepth;
 
 // Light positioning
@@ -100,9 +100,14 @@ PointLight pLights[4] = { { glm::vec3(7.5f, 1.5f, -5.0f),	10.0f, glm::vec3(1.0f,
 Material mat = { 0.1f, 32 }; // Alternate way to construct an object.
 
 // Bonus Key
-glm::vec3 keyPosition_1;
+glm::vec3 keyPosition_1, depositPosition_1 = { 9.0f, 0.5f, -12.0f };
+glm::vec3 gatePosition_1 = { 9.0f, 0.25,-20 };
 bool keyCollected_1 = false;
 bool keyDeposited_1 = false;
+bool printStatus_KeyCollected = false;
+bool printStatus_KeyDeposited = false;
+bool printStatus_NearGate = false;
+bool hoverAnimation = false;
 
 void timer(int);
 
@@ -375,11 +380,23 @@ void init(void)
 
 	// Bonus Key
 	unsigned char* image6 = stbi_load("tx_bonus_key.png", &width, &height, &bitDepth, 0);
-	if (!image4) cout << "Unable to load file!" << endl;
+	if (!image6) cout << "Unable to load file!" << endl;
 
 	glGenTextures(1, &bonusKeyTx);
 	glBindTexture(GL_TEXTURE_2D, bonusKeyTx);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image6);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	// Castle Walls Key
+	unsigned char* image7 = stbi_load("tx_brick_bright.jpg", &width, &height, &bitDepth, 0);
+	if (!image7) cout << "Unable to load file!" << endl;
+
+	glGenTextures(1, &castleWallsTx);
+	glBindTexture(GL_TEXTURE_2D, castleWallsTx);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image7);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -481,8 +498,18 @@ void init(void)
 	placeCube(glm::vec3(8.0f, 0.0f, -13.5f), 4.0f, 3.0f, 0.5f, stoneTx, 1.0f);
 	// ------------------------ End Hedge Maze --------------------------------
 
-	
 
+	// ------------------------ Castle Walls --------------------------------
+	placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
+
+	// ------------------------ Castle Corners --------------------------------
+	placeCylinder(glm::vec3(-0.7f, 0.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCylinder(glm::vec3(-0.7f, 1.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCylinder(glm::vec3(-0.7f, 2.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCylinder(glm::vec3(-0.7f, 3.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCylinder(glm::vec3(-0.7f, 4.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCone(glm::vec3(-0.7f, 5.0f, 0.1f), 10, 1, castleWallsTx, { 1.0f,1.0f,1.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	
 
 	// Enable depth test and blend.
 	glEnable(GL_DEPTH_TEST);
@@ -531,27 +558,45 @@ void display(void)
 	// keep on comparing position of camera and key
 	if (!keyCollected_1)
 	{
+		//std::cout << "Shapes size = " << Shapes.size() << std::endl;
 		keyPosition_1 = { 15.25f, 0.0f, -12.0f };
+	
 		placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
 
-		if (abs(position.x - keyPosition_1.x) < 1.0f && abs(position.z - keyPosition_1.z) < 1.0f && abs(position.y - keyPosition_1.y) < 1.0f)
+		if (abs(position.x - keyPosition_1.x) < 2.0f && abs(position.z - keyPosition_1.z) < 2.0f && abs(position.y - keyPosition_1.y) < 2.0f)
 		{
-			std::cout << " In Collision! " << position.x << std::endl;
+			//std::cout << " In Collision! " << std::endl;
+			printStatus_KeyCollected = true;
 			keyCollected_1 = true;
+
 		}
 	}
-	
+
 	if (keyCollected_1 && !keyDeposited_1)
 	{
-		placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, blankTx, 1);
-		std::cout << "You have keys, but haven't deposited it in the room yet!!!" << std::endl;
+		for (int i = 0; i < Shapes.size(); i++)
+		{
+			if (Shapes[i].textureID == bonusKeyTx)
+			{
+				Shapes.erase(Shapes.begin() + i);
+				//break;
+			}
+		}
+		if (abs(position.x - depositPosition_1.x) < 2.0f && abs(position.z - depositPosition_1.z) < 2.0f && abs(position.y - depositPosition_1.y) < 2.0f)
+		{
+			//std::cout << " You have the key, Deposit it! " << position.x << std::endl;
+			keyDeposited_1 = true;
+			printStatus_KeyDeposited = true;
+		}
 	}
+
 
 	if (keyDeposited_1)
 	{
-		std::cout << "Ready to Go !" << std::endl;
+		placeCube(depositPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1.0f);
+		//std::cout << "Ready to Go !" << std::endl;
 	}
-	
+
 	// Draw all the shapes
 	for (std::vector<ShapeInfo>::iterator it = Shapes.begin(); it != Shapes.end(); ++it) {
 		DrawShape(*it);
@@ -571,6 +616,41 @@ void display(void)
 
 	glBindVertexArray(0); // Done writing.
 	glutSwapBuffers(); // Now for a potentially smoother render.
+
+	if (printStatus_KeyCollected)
+	{
+		std::cout << "Key Collected!! Now Deposit this key at it's location." << std::endl;
+		printStatus_KeyCollected = false;
+	}
+
+	if(printStatus_KeyDeposited)
+	{
+		std::cout << "Key Deposited!! The Gates are now unlocked." << std::endl;
+		printStatus_KeyDeposited = false;
+	}
+
+	if(printStatus_NearGate)
+	{
+		
+	}
+	
+	if(abs(position.x - gatePosition_1.x) < 2.0f && abs(position.z - gatePosition_1.z) < 2.0f && abs(position.y - gatePosition_1.y) < 2.0f)
+	{
+		//std::system("cls");
+		if (!keyCollected_1)
+		{
+			std::cout << "Gates are Locked! There is a key somewhere over here. Collect it, deposit it at the room to unlock these gates." << std::endl;
+		}
+		else if (keyCollected_1 && !keyDeposited_1)
+		{
+			std::cout << "Key Has been Collected! Now place it at it's location to unlock the gate." << std::endl;
+		}
+		else if (keyDeposited_1)
+		{
+			std::cout << "You may pass!" << std::endl;
+		}
+	}
+	
 }
 
 void parseKeys()

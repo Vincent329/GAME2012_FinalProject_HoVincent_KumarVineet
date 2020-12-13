@@ -23,7 +23,8 @@ D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\
 D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(722,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
 D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(787,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
 D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(824,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(161,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(175,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(416,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(166,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(180,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(433,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(577,21): warning C4018: '<': signed/unsigned mismatch
   FirstExample.vcxproj -> D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\FirstExample.exe
