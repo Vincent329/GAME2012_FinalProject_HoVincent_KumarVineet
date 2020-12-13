@@ -544,7 +544,7 @@ struct Prism : public Shape
 
 struct ClonedPrism : public Shape 
 {
-	ClonedPrism(int sides)
+	ClonedPrism(int sides, float height)
 	{
 		float theta = 0.0f;
 		int indexCount = 0;
@@ -591,7 +591,7 @@ struct ClonedPrism : public Shape
 		{
 			// Make the center vertex every time
 			shape_vertices.push_back(0.5f);
-			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(height);
 			shape_vertices.push_back(0.5f);
 			// UV for center point
 			shape_uvs.push_back(0.5f);
@@ -601,7 +601,7 @@ struct ClonedPrism : public Shape
 
 			// bottom right point
 			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
-			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(height);
 			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
 			//Uvs for bottom right point
 			shape_uvs.push_back(1.0f);
@@ -613,7 +613,7 @@ struct ClonedPrism : public Shape
 
 			// bottom left point
 			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
-			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(height);
 			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
 			//Uvs for bottom left point
 			shape_uvs.push_back(0.0f);
@@ -630,7 +630,7 @@ struct ClonedPrism : public Shape
 			// ---------------top triangle----------
 			// top left point
 			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
-			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(height);
 			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
 			//Uvs for top left point
 			shape_uvs.push_back(0.0f);
@@ -642,7 +642,7 @@ struct ClonedPrism : public Shape
 
 			// top right point
 			shape_vertices.push_back(0.5f + 0.5f * cos(gamma));
-			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(height);
 			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
 			//Uvs for top right point
 			shape_uvs.push_back(1.0f);
@@ -656,7 +656,7 @@ struct ClonedPrism : public Shape
 			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
 			//Uvs for bottomright point
 			shape_uvs.push_back(1.0f);
-			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(height);
 			// push an index back
 			shape_indices.push_back(indexCount++);
 
@@ -671,7 +671,7 @@ struct ClonedPrism : public Shape
 			shape_vertices.push_back(0.5f + 0.5f * sin(theta));
 			//Uvs for bottomright point
 			shape_uvs.push_back(1.0f);
-			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(height);
 			// push an index back
 			shape_indices.push_back(indexCount++);
 
@@ -683,13 +683,13 @@ struct ClonedPrism : public Shape
 			shape_vertices.push_back(0.5f + 0.5f * sin(theta));
 			//Uvs for top left point
 			shape_uvs.push_back(0.0f);
-			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(height);
 			// push an index back
 			shape_indices.push_back(indexCount++);
 
 			// top left point
 			shape_vertices.push_back(0.5f + 0.5f * cos(theta));
-			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(height);
 			shape_vertices.push_back(0.5f + 0.5f * sin(theta));
 			//Uvs for top left point
 			shape_uvs.push_back(0.0f);
@@ -756,7 +756,7 @@ struct Cone : public Shape
 // Cone with cloned vertices
 struct ClonedCone : public Shape
 {
-	ClonedCone(int sides)
+	ClonedCone(int sides, float height)
 	{
 		float theta = 0.0f;
 		int indexCount = 0;
@@ -803,7 +803,7 @@ struct ClonedCone : public Shape
 		{
 			// Make the center vertex every time
 			shape_vertices.push_back(0.5f);
-			shape_vertices.push_back(1.0f);
+			shape_vertices.push_back(height);
 			shape_vertices.push_back(0.5f);
 			// UV for center point
 			shape_uvs.push_back(0.5f);
@@ -817,7 +817,7 @@ struct ClonedCone : public Shape
 			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
 			//Uvs for bottom right point
 			shape_uvs.push_back(1.0f);
-			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(height);
 			// push an index back
 			shape_indices.push_back(indexCount++);
 
@@ -829,7 +829,7 @@ struct ClonedCone : public Shape
 			shape_vertices.push_back(0.5f + 0.5f * sin(gamma));
 			//Uvs for bottom left point
 			shape_uvs.push_back(0.0f);
-			shape_uvs.push_back(1.0f);
+			shape_uvs.push_back(height);
 			// push an index back
 			shape_indices.push_back(indexCount++);
 		}
