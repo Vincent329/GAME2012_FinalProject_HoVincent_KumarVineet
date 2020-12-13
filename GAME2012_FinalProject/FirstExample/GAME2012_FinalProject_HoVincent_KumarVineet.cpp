@@ -124,6 +124,7 @@ Prism g_prism(24);
 Plane g_plane;
 ClonedCone g_clonedCone(12,3);
 ClonedPrism g_clonedPrism(12,3);
+
 // where we set up objects
 Cube test_cube(5.0f, 6.0f, 7.0f);
 
@@ -159,7 +160,7 @@ void placeCylinder(glm::vec3 pos, float sides, float h, GLuint id, glm::vec3 sca
 	glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
 {
 	ShapeInfo s;
-	s.shape = ClonedPrism(sides,h);
+	s.shape = ClonedPrism(sides, h);
 	s.scale = scale;
 	s.color = c;
 	s.position = pos;
@@ -173,7 +174,7 @@ void placeCone(glm::vec3 pos, float sides, float h, GLuint id, glm::vec3 scale,
 	glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
 {
 	ShapeInfo s;
-	s.shape = ClonedCone(sides,h);
+	s.shape = ClonedCone(sides, h);
 	s.scale = scale;
 	s.color = c;
 	s.position = pos;
@@ -501,6 +502,10 @@ void init(void)
 
 	placeCube(glm::vec3(-1.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
 	placeCube(glm::vec3(-2.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
+	/*placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-1.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);*/
+	//placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
+	
 
 	// battlements - merlons and crenels
 	float merlon_1 = -0.75f;
@@ -515,6 +520,28 @@ void init(void)
 	placeCylinder(glm::vec3(-2.25f, 0.0f, -24.25f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 	placeCone(glm::vec3(-2.75f, 5.0f, -25.0f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 	
+	//placeCylinder(glm::vec3(-0.7f, 0.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	//placeCylinder(glm::vec3(-0.7f, 1.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	//placeCylinder(glm::vec3(-0.7f, 2.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	//placeCylinder(glm::vec3(-0.7f, 3.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	//placeCylinder(glm::vec3(-0.7f, 4.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	//placeCone(glm::vec3(-1.2f, 5.0f, -0.4f), 10, 1, castleWallsTx, { 2.0f,2.0f,2.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	//
+	// ------------------------- Back Wall and Gatehouse -----------------------------
+	placeCube(glm::vec3(-1.0f, 0.0f, -26.5f), 1.5f, 9.0f, 4.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(11.0f, 0.0f, -26.5f), 1.5f, 9.0f, 4.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(3.0f, 0.0f,  -27.5f), 1.0f, 4.0f, 5.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(12.0f, 0.0f, -27.5f), 1.0f, 4.0f, 5.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(5.0f, 0.0f,  -29.5f), 2.0f, 2.0f, 5.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(12.0f, 0.0f, -29.5f), 2.0f, 2.0f, 5.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(7.0f, 3.0f,  -26.5f), 1.5f, 5.0f, 1.0f, castleWallsTx, 1.0f);
+
+	// ------------------------- Stairs -------------------------------
+	placeCube(glm::vec3(8.0f, 0.0f, -24.0f), 1.0f, 3.0f, 0.25f, stoneTx, 1.0f);
+	placeCube(glm::vec3(7.0f, 0.0f, -25.0f), 1.0f, 5.0f, 0.5f, stoneTx, 1.0f);
+	placeCube(glm::vec3(8.0f, 0.0f, -27.0f), 2.0f, 3.0f, 0.5f, stoneTx, 1.0f);
+	placeCube(glm::vec3(8.0f, 0.0f, -28.0f), 2.0f, 3.0f, 0.25f, stoneTx, 1.0f);
+
 
 	// Enable depth test and blend.
 	glEnable(GL_DEPTH_TEST);
