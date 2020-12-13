@@ -85,15 +85,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GAME2012_FinalProject_HoVincent_KumarVineet.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="LoadShaders.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\LoadShaders.h" />
     <ClInclude Include="Light.h" />
-    <ClInclude Include="Shape.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="alex.jpg" />

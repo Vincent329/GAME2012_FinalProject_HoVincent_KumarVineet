@@ -68,7 +68,6 @@ int lastX, lastY;
 
 // Texture variables.
 GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx;
-GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, bonusKeyTx;
 GLint width, height, bitDepth;
 
 // Light positioning
@@ -99,11 +98,6 @@ PointLight pLights[4] = { { glm::vec3(7.5f, 1.5f, -5.0f),	10.0f, glm::vec3(1.0f,
 
 
 Material mat = { 0.1f, 32 }; // Alternate way to construct an object.
-
-// Bonus Key
-glm::vec3 keyPosition_1;
-bool keyCollected_1 = false;
-bool keyDeposited_1 = false;
 
 void timer(int);
 
@@ -321,11 +315,11 @@ void init(void)
 
 	// Second texture. Blank one.
 	
-	unsigned char* image2 = stbi_load("blank.jpg", &width, &height, &bitDepth, 0);
+	unsigned char* image2 = stbi_load("floor.jpg", &width, &height, &bitDepth, 0);
 	if (!image2) cout << "Unable to load file!" << endl;
 	
-	glGenTextures(1, &blankTx);
-	glBindTexture(GL_TEXTURE_2D, blankTx);
+	glGenTextures(1, &groundTx);
+	glBindTexture(GL_TEXTURE_2D, groundTx);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image2);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -361,7 +355,9 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	stbi_image_free(image4);
 
-	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
+	// Stone Texture
+	unsigned char* image5 = stbi_load("tx_stone.png", &width, &height, &bitDepth, 0);
+	if (!image5) cout << "Unable to load file!" << endl;
 
 	glGenTextures(1, &stoneTx);
 	glBindTexture(GL_TEXTURE_2D, stoneTx);
@@ -375,56 +371,28 @@ void init(void)
 
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
-	// Setting point lights.
-	
-		glUniform3f(glGetUniformLocation(program, "pLights[0].base.diffuseColour"), pLights[0].diffuseColour.x, pLights[0].diffuseColour.y, pLights[0].diffuseColour.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[0].base.diffuseStrength"), pLights[0].diffuseStrength);
-		glUniform3f(glGetUniformLocation(program, "pLights[0].position"), pLights[0].position.x, pLights[0].position.y, pLights[0].position.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[0].constant"), pLights[0].constant);
-		glUniform1f(glGetUniformLocation(program, "pLights[0].linear"), pLights[0].linear);
-		glUniform1f(glGetUniformLocation(program, "pLights[0].exponent"), pLights[0].exponent);
-	
-		glUniform3f(glGetUniformLocation(program, "pLights[1].base.diffuseColour"), pLights[1].diffuseColour.x, pLights[1].diffuseColour.y, pLights[1].diffuseColour.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[1].base.diffuseStrength"), pLights[1].diffuseStrength);
-		glUniform3f(glGetUniformLocation(program, "pLights[1].position"), pLights[1].position.x, pLights[1].position.y, pLights[1].position.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[1].constant"), pLights[1].constant);
-		glUniform1f(glGetUniformLocation(program, "pLights[1].linear"), pLights[1].linear);
-		glUniform1f(glGetUniformLocation(program, "pLights[1].exponent"), pLights[1].exponent);
-
-		glUniform3f(glGetUniformLocation(program, "pLights[2].base.diffuseColour"), pLights[2].diffuseColour.x, pLights[2].diffuseColour.y, pLights[2].diffuseColour.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[2].base.diffuseStrength"), pLights[2].diffuseStrength);
-		glUniform3f(glGetUniformLocation(program, "pLights[2].position"), pLights[2].position.x, pLights[2].position.y, pLights[2].position.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[2].constant"), pLights[2].constant);
-		glUniform1f(glGetUniformLocation(program, "pLights[2].linear"), pLights[2].linear);
-		glUniform1f(glGetUniformLocation(program, "pLights[2].exponent"), pLights[2].exponent);
-
-		glUniform3f(glGetUniformLocation(program, "pLights[3].base.diffuseColour"), pLights[3].diffuseColour.x, pLights[3].diffuseColour.y, pLights[3].diffuseColour.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[3].base.diffuseStrength"), pLights[3].diffuseStrength);
-		glUniform3f(glGetUniformLocation(program, "pLights[3].position"), pLights[3].position.x, pLights[3].position.y, pLights[3].position.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[3].constant"), pLights[3].constant);
-		glUniform1f(glGetUniformLocation(program, "pLights[3].linear"), pLights[3].linear);
-		glUniform1f(glGetUniformLocation(program, "pLights[3].exponent"), pLights[3].exponent);
-
+	// Set lights
+	setupLights();
 		
 
 	vao = 0; 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	ibo = 0;
-	glGenBuffers(1, &ibo);
+		ibo = 0;
+		glGenBuffers(1, &ibo);
+	
+		points_vbo = 0;
+		glGenBuffers(1, &points_vbo);
 
-	points_vbo = 0;
-	glGenBuffers(1, &points_vbo);
+		colors_vbo = 0;
+		glGenBuffers(1, &colors_vbo);
 
-	colors_vbo = 0;
-	glGenBuffers(1, &colors_vbo);
+		uv_vbo = 0;
+		glGenBuffers(1, &uv_vbo);
 
-	uv_vbo = 0;
-	glGenBuffers(1, &uv_vbo);
-
-	normals_vbo = 0;
-	glGenBuffers(1, &normals_vbo);
+		normals_vbo = 0;
+		glGenBuffers(1, &normals_vbo);
 
 	glBindVertexArray(0); // Can optionally unbind the vertex array to avoid modification.
 
@@ -497,12 +465,9 @@ void init(void)
 	placeCube(glm::vec3(8.0f, 0.0f, -13.5f), 4.0f, 3.0f, 0.5f, stoneTx, 1.0f);
 	// ------------------------ End Hedge Maze --------------------------------
 
-	// Error Resolved ???
-	
 	
 
 
-	// ------------------------Bonus Part End --------------------------------
 	// Enable depth test and blend.
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -543,37 +508,9 @@ void display(void)
 	glUniform3f(glGetUniformLocation(program, "pLights[0].position"), pLights[0].position.x, pLights[0].position.y, pLights[0].position.z);
 	glUniform3f(glGetUniformLocation(program, "pLights[1].position"), pLights[1].position.x, pLights[1].position.y, pLights[1].position.z);
 	glUniform3f(glGetUniformLocation(program, "pLights[2].position"), pLights[2].position.x, pLights[2].position.y, pLights[2].position.z);
-	glUniform3f(glGetUniformLocation(program, "pLights[3].	"), pLights[3].position.x, pLights[3].position.y, pLights[3].position.z);
+	glUniform3f(glGetUniformLocation(program, "pLights[3].position"), pLights[3].position.x, pLights[3].position.y, pLights[3].position.z);
 
 
-	// ------------------------Bonus Part --------------------------------
-	// Start here
-	// keep on comparing position of camera and key
-	if (!keyCollected_1)
-	{
-		keyPosition_1 = { 15.25f, 0.0f, -12.0f };
-		createCube(1.0f, keyPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx);
-
-		if (abs(position.x - keyPosition_1.x) < 1.0f && abs(position.z - keyPosition_1.z) < 1.0f && abs(position.y - keyPosition_1.y) < 1.0f)
-		{
-			std::cout << " In Collision! " << position.x << std::endl;
-			keyCollected_1 = true;
-		}
-	}
-	
-	
-	
-	if (keyCollected_1 && !keyDeposited_1)
-	{
-		std::cout << "You have keys, but haven't deposited it in the room yet!!!" << std::endl;
-	}
-
-	if(keyDeposited_1)
-	{
-		std::cout << "Ready to Go !" << std::endl;
-	}
-
-	
 	// Draw all the shapes
 	for (std::vector<ShapeInfo>::iterator it = Shapes.begin(); it != Shapes.end(); ++it) {
 		DrawShape(*it);
@@ -592,10 +529,6 @@ void display(void)
 	glDrawElements(GL_TRIANGLES, g_clonedPrism.NumIndices(), GL_UNSIGNED_SHORT, 0);
 
 	glBindVertexArray(0); // Done writing.
-
-
-	
-	
 	glutSwapBuffers(); // Now for a potentially smoother render.
 }
 
