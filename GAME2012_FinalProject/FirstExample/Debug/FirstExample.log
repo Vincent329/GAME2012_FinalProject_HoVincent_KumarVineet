@@ -1,19 +1,27 @@
-﻿LINK : warning LNK4098: defaultlib 'LIBCMTD' conflicts with use of other libs; use /NODEFAULTLIB:library
-glew_static_vs2010_d.lib(glew.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'glew_static_vs2010_d.lib(glew.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_callbacks.obj) : warning LNK4099: PDB '' was not found with 'freeglut_static_vs2010_d.lib(freeglut_callbacks.obj)' or at ''; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_cursor.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_cursor.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_display.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_display.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_font.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_font.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_font_data.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_font_data.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_init.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_init.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_input_devices.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_input_devices.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_joystick.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_joystick.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_main.obj) : warning LNK4099: PDB '' was not found with 'freeglut_static_vs2010_d.lib(freeglut_main.obj)' or at ''; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_menu.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_menu.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_spaceball.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_spaceball.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_state.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_state.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_stroke_mono_roman.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_stroke_mono_roman.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_stroke_roman.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_stroke_roman.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_structure.obj) : warning LNK4099: PDB '' was not found with 'freeglut_static_vs2010_d.lib(freeglut_structure.obj)' or at ''; linking object as if no debug info
-freeglut_static_vs2010_d.lib(freeglut_window.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'freeglut_static_vs2010_d.lib(freeglut_window.obj)' or at 'D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\vc100.pdb'; linking object as if no debug info
+﻿  GAME2012_FinalProject_HoVincent_KumarVineet.cpp
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(135,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(147,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(195,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(214,30): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(215,30): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(253,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(545,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(556,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(598,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(638,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(675,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(704,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(741,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(785,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(850,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(887,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(368,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   FirstExample.vcxproj -> D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\FirstExample.exe
