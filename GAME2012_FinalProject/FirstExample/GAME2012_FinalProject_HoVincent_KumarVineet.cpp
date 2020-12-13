@@ -498,34 +498,68 @@ void init(void)
 
 	// ------------------------ Castle Walls --------------------------------
 	//Left 
-	placeCube(glm::vec3(-2.0f, 0.0f, -22.75f), 23.0f, 1.5f, 4.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-2.0f, 0.0f, -25.75f), 26.00f, 1.5f, 4.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-0.5f, 4.0f, -24.75f), 25.00f, 0.5f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-2.5f, 4.0f, -24.75f), 25.00f, 0.5f, 0.25f, castleWallsTx, 1.0f);	
 
-	placeCube(glm::vec3(-1.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
-	placeCube(glm::vec3(-2.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
-	/*placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
-	placeCube(glm::vec3(-1.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);*/
-	//placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
-	
-
-	// battlements - merlons and crenels
+	// Battlements - merlons and crenels
+	// Left
 	float merlon_1 = -0.75f;
-	for(int i = 0; i < 16; i++, merlon_1 -= 1.5f)
+	for(int i = 0; i < 17; i++, merlon_1 -= 1.5f)
 	{
-		placeCube(glm::vec3(-1.0f, 4.25f, merlon_1), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
-		placeCube(glm::vec3(-2.0f, 4.25f, merlon_1), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+		if(i==16 || i == 0)
+		{
+			placeCube(glm::vec3(-0.5f, 4.25f, merlon_1), 1.5f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+			placeCube(glm::vec3(-2.5f, 4.25f, merlon_1 ), 1.5f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+		}
+		else
+		{
+			placeCube(glm::vec3(-0.5f, 4.25f, merlon_1), 1.25f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+			placeCube(glm::vec3(-2.5f, 4.25f, merlon_1), 1.25f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+		}
+		
 	}
 	// ------------------------ Castle Corners --------------------------------
+	// Tower 1
 	placeCylinder(glm::vec3(-2.25f, 0.0f, -0.1f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(-2.75f, 5.0f, -0.5f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCylinder(glm::vec3(-2.25f, 0.0f, -24.25f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(-2.75f, 5.0f, -25.0f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	
-	//placeCylinder(glm::vec3(-0.7f, 0.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	//placeCylinder(glm::vec3(-0.7f, 1.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	//placeCylinder(glm::vec3(-0.7f, 2.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	//placeCylinder(glm::vec3(-0.7f, 3.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	//placeCylinder(glm::vec3(-0.7f, 4.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	//placeCone(glm::vec3(-1.2f, 5.0f, -0.4f), 10, 1, castleWallsTx, { 2.0f,2.0f,2.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(-2.75f, 5.0f, -0.375f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+
+	// Tower 2
+	placeCylinder(glm::vec3(-2.25f, 0.0f, -26.75f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(-2.75f, 5.0f, -27.25f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+
+
+	//Right 
+	placeCube(glm::vec3(19.5f, 0.0f, -25.75f), 26.00f, 1.5f, 4.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(19.0f, 4.0f, -25.75f), 26.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(21.0f, 4.0f, -25.75f), 26.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
+
+	// Battlements - merlons and crenels
+	// Right
+	float merlon_2 = -0.75f;
+	for (int i = 0; i < 17; i++, merlon_2 -= 1.5f)
+	{
+		if (i == 16 || i==0)
+		{
+			placeCube(glm::vec3(19.0f, 4.25f, merlon_2 ), 1.5f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+			placeCube(glm::vec3(21.0f, 4.25f, merlon_2 ), 1.5f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+		}									  
+		else							  
+		{									  
+			placeCube(glm::vec3(19.0f, 4.25f, merlon_2), 1.250f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+			placeCube(glm::vec3(21.0f, 4.25f, merlon_2), 1.250f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+		}
+
+	}
+	// ------------------------ Castle Corners --------------------------------
+	// Tower 3
+	placeCylinder(glm::vec3(19.25f, 0.0f, -0.1f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(18.75f, 5.0f, -0.5f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+
+	// Tower 4
+	placeCylinder(glm::vec3(19.25f, 0.0f, -26.75f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(18.75f, 5.0f, -27.5f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+
 	//
 	// ------------------------- Back Wall and Gatehouse -----------------------------
 	placeCube(glm::vec3(-1.0f, 0.0f, -26.5f), 1.5f, 9.0f, 4.0f, castleWallsTx, 1.0f);
