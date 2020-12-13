@@ -1,27 +1,29 @@
 ﻿  GAME2012_FinalProject_HoVincent_KumarVineet.cpp
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(135,21): warning C4018: '<': signed/unsigned mismatch
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(147,21): warning C4018: '<': signed/unsigned mismatch
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(195,21): warning C4018: '<': signed/unsigned mismatch
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(214,30): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(72,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(84,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(132,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(151,30): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
           with
           [
               _Ty=GLfloat
           ]
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(215,30): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(152,30): warning C4244: 'argument': conversion from 'int' to 'const _Ty', possible loss of data
           with
           [
               _Ty=GLfloat
           ]
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(253,21): warning C4018: '<': signed/unsigned mismatch
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(545,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(556,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(598,21): warning C4018: '<': signed/unsigned mismatch
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(638,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(675,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(704,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(741,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(785,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(850,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(887,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(368,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(190,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(482,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(493,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(535,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(575,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(612,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(641,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(678,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(722,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(787,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\Shape.h(824,1): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(161,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(175,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(416,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   FirstExample.vcxproj -> D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\FirstExample.exe
