@@ -67,7 +67,7 @@ GLfloat pitch, yaw;
 int lastX, lastY;
 
 // Texture variables.
-GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx;
+GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx, bonusKeyTx;
 GLint width, height, bitDepth;
 
 // Light positioning
@@ -98,6 +98,11 @@ PointLight pLights[4] = { { glm::vec3(7.5f, 1.5f, -5.0f),	10.0f, glm::vec3(1.0f,
 
 
 Material mat = { 0.1f, 32 }; // Alternate way to construct an object.
+
+// Bonus Key
+glm::vec3 keyPosition_1;
+bool keyCollected_1 = false;
+bool keyDeposited_1 = false;
 
 void timer(int);
 
@@ -368,6 +373,17 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	stbi_image_free(image5);
 
+	// Bonus Key
+	unsigned char* image6 = stbi_load("tx_bonus_key.png", &width, &height, &bitDepth, 0);
+	if (!image4) cout << "Unable to load file!" << endl;
+
+	glGenTextures(1, &bonusKeyTx);
+	glBindTexture(GL_TEXTURE_2D, bonusKeyTx);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image6);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
@@ -510,7 +526,32 @@ void display(void)
 	glUniform3f(glGetUniformLocation(program, "pLights[2].position"), pLights[2].position.x, pLights[2].position.y, pLights[2].position.z);
 	glUniform3f(glGetUniformLocation(program, "pLights[3].position"), pLights[3].position.x, pLights[3].position.y, pLights[3].position.z);
 
+	// ------------------------Bonus Part --------------------------------
+	// Start here
+	// keep on comparing position of camera and key
+	if (!keyCollected_1)
+	{
+		keyPosition_1 = { 15.25f, 0.0f, -12.0f };
+		placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
 
+		if (abs(position.x - keyPosition_1.x) < 1.0f && abs(position.z - keyPosition_1.z) < 1.0f && abs(position.y - keyPosition_1.y) < 1.0f)
+		{
+			std::cout << " In Collision! " << position.x << std::endl;
+			keyCollected_1 = true;
+		}
+	}
+	
+	if (keyCollected_1 && !keyDeposited_1)
+	{
+		placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, blankTx, 1);
+		std::cout << "You have keys, but haven't deposited it in the room yet!!!" << std::endl;
+	}
+
+	if (keyDeposited_1)
+	{
+		std::cout << "Ready to Go !" << std::endl;
+	}
+	
 	// Draw all the shapes
 	for (std::vector<ShapeInfo>::iterator it = Shapes.begin(); it != Shapes.end(); ++it) {
 		DrawShape(*it);
