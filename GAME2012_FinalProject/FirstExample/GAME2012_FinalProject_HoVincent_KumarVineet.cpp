@@ -67,7 +67,7 @@ GLfloat pitch, yaw;
 int lastX, lastY;
 
 // Texture variables.
-GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx;
+GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx;
 GLint width, height, bitDepth;
 
 // Light positioning
@@ -114,7 +114,6 @@ void resetView()
 // ---------------------------- Shapes. Recommend putting in a map ---------------------------------------------
 Grid g_grid(40);
 Cube g_cube;
-Cube longHedge;
 Prism g_prism(24);
 Plane g_plane;
 ClonedCone g_clonedCone(12);
@@ -135,7 +134,8 @@ struct ShapeInfo {
 
 std::vector<ShapeInfo> Shapes;
 
-void createCube(float scale, glm::vec3 pos, float l, float w, float h, GLuint id, glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS,  float angle = 0.0f)
+// creating any cube
+void placeCube(glm::vec3 pos, float l, float w, float h, GLuint id, float scale, glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
 {
 	ShapeInfo s;
 	s.shape = Cube(l, w, h);
@@ -146,6 +146,35 @@ void createCube(float scale, glm::vec3 pos, float l, float w, float h, GLuint id
 	s.rotAxis = rot;
 	s.rotAngle = angle;
 	Shapes.push_back(s);	
+}
+
+// creating any cylinder
+void placeCylinder(glm::vec3 pos, float sides, float h, GLuint id, glm::vec3 scale, 
+	glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
+{
+	ShapeInfo s;
+	s.shape = ClonedPrism(sides);
+	s.scale = scale;
+	s.color = c;
+	s.position = pos;
+	s.textureID = id;
+	s.rotAxis = rot;
+	s.rotAngle = angle;
+	Shapes.push_back(s);
+}
+
+void placeCone(glm::vec3 pos, float sides, float h, GLuint id, glm::vec3 scale, 
+	glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
+{
+	ShapeInfo s;
+	s.shape = ClonedCone(sides);
+	s.scale = scale;
+	s.color = c;
+	s.position = pos;
+	s.textureID = id;
+	s.rotAxis = rot;
+	s.rotAngle = angle;
+	Shapes.push_back(s);
 }
 
 //---------------------------------------------------------------------
@@ -195,6 +224,50 @@ void DrawShape(ShapeInfo& sInfo, GLenum mode = GL_TRIANGLES)
 	glDrawElements(mode, sInfo.shape.NumIndices(), GL_UNSIGNED_SHORT, 0);
 }
 
+void setupLights()
+{
+
+	// Setting ambient Light.
+	glUniform3f(glGetUniformLocation(program, "aLight.ambientColour"), aLight.ambientColour.x, aLight.ambientColour.y, aLight.ambientColour.z);
+	glUniform1f(glGetUniformLocation(program, "aLight.ambientStrength"), aLight.ambientStrength);
+
+	// Setting directional light.
+	glUniform3f(glGetUniformLocation(program, "dLight.base.diffuseColour"), dLight.diffuseColour.x, dLight.diffuseColour.y, dLight.diffuseColour.z);
+	glUniform1f(glGetUniformLocation(program, "dLight.base.diffuseStrength"), dLight.diffuseStrength);
+
+	glUniform3f(glGetUniformLocation(program, "dLight.direction"), dLight.direction.x, dLight.direction.y, dLight.direction.z);
+
+	// Setting point lights.
+
+	glUniform3f(glGetUniformLocation(program, "pLights[0].base.diffuseColour"), pLights[0].diffuseColour.x, pLights[0].diffuseColour.y, pLights[0].diffuseColour.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[0].base.diffuseStrength"), pLights[0].diffuseStrength);
+	glUniform3f(glGetUniformLocation(program, "pLights[0].position"), pLights[0].position.x, pLights[0].position.y, pLights[0].position.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[0].constant"), pLights[0].constant);
+	glUniform1f(glGetUniformLocation(program, "pLights[0].linear"), pLights[0].linear);
+	glUniform1f(glGetUniformLocation(program, "pLights[0].exponent"), pLights[0].exponent);
+
+	glUniform3f(glGetUniformLocation(program, "pLights[1].base.diffuseColour"), pLights[1].diffuseColour.x, pLights[1].diffuseColour.y, pLights[1].diffuseColour.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[1].base.diffuseStrength"), pLights[1].diffuseStrength);
+	glUniform3f(glGetUniformLocation(program, "pLights[1].position"), pLights[1].position.x, pLights[1].position.y, pLights[1].position.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[1].constant"), pLights[1].constant);
+	glUniform1f(glGetUniformLocation(program, "pLights[1].linear"), pLights[1].linear);
+	glUniform1f(glGetUniformLocation(program, "pLights[1].exponent"), pLights[1].exponent);
+
+	glUniform3f(glGetUniformLocation(program, "pLights[2].base.diffuseColour"), pLights[2].diffuseColour.x, pLights[2].diffuseColour.y, pLights[2].diffuseColour.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[2].base.diffuseStrength"), pLights[2].diffuseStrength);
+	glUniform3f(glGetUniformLocation(program, "pLights[2].position"), pLights[2].position.x, pLights[2].position.y, pLights[2].position.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[2].constant"), pLights[2].constant);
+	glUniform1f(glGetUniformLocation(program, "pLights[2].linear"), pLights[2].linear);
+	glUniform1f(glGetUniformLocation(program, "pLights[2].exponent"), pLights[2].exponent);
+
+	glUniform3f(glGetUniformLocation(program, "pLights[3].base.diffuseColour"), pLights[3].diffuseColour.x, pLights[3].diffuseColour.y, pLights[3].diffuseColour.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[3].base.diffuseStrength"), pLights[3].diffuseStrength);
+	glUniform3f(glGetUniformLocation(program, "pLights[3].position"), pLights[3].position.x, pLights[3].position.y, pLights[3].position.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[3].constant"), pLights[3].constant);
+	glUniform1f(glGetUniformLocation(program, "pLights[3].linear"), pLights[3].linear);
+	glUniform1f(glGetUniformLocation(program, "pLights[3].exponent"), pLights[3].exponent);
+}
+
 void init(void)
 {
 	srand((unsigned)time(NULL));
@@ -242,11 +315,11 @@ void init(void)
 
 	// Second texture. Blank one.
 	
-	unsigned char* image2 = stbi_load("blank.jpg", &width, &height, &bitDepth, 0);
+	unsigned char* image2 = stbi_load("floor.jpg", &width, &height, &bitDepth, 0);
 	if (!image2) cout << "Unable to load file!" << endl;
 	
-	glGenTextures(1, &blankTx);
-	glBindTexture(GL_TEXTURE_2D, blankTx);
+	glGenTextures(1, &groundTx);
+	glBindTexture(GL_TEXTURE_2D, groundTx);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image2);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -267,6 +340,7 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	stbi_image_free(image3);
 
 	// Hedge Texture
 	unsigned char* image4 = stbi_load("tx_grass_dull.png", &width, &height, &bitDepth, 0);
@@ -279,49 +353,26 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	stbi_image_free(image4);
+
+	// Stone Texture
+	unsigned char* image5 = stbi_load("tx_stone.png", &width, &height, &bitDepth, 0);
+	if (!image5) cout << "Unable to load file!" << endl;
+
+	glGenTextures(1, &stoneTx);
+	glBindTexture(GL_TEXTURE_2D, stoneTx);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image5);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	stbi_image_free(image5);
+
 
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
-	// Setting ambient Light.
-	glUniform3f(glGetUniformLocation(program, "aLight.ambientColour"), aLight.ambientColour.x, aLight.ambientColour.y, aLight.ambientColour.z);
-	glUniform1f(glGetUniformLocation(program, "aLight.ambientStrength"), aLight.ambientStrength);
-
-	// Setting directional light.
-	glUniform3f(glGetUniformLocation(program, "dLight.base.diffuseColour"), dLight.diffuseColour.x, dLight.diffuseColour.y, dLight.diffuseColour.z);
-	glUniform1f(glGetUniformLocation(program, "dLight.base.diffuseStrength"), dLight.diffuseStrength);
-
-	glUniform3f(glGetUniformLocation(program, "dLight.direction"), dLight.direction.x, dLight.direction.y, dLight.direction.z);
-
-	// Setting point lights.
-	
-		glUniform3f(glGetUniformLocation(program, "pLights[0].base.diffuseColour"), pLights[0].diffuseColour.x, pLights[0].diffuseColour.y, pLights[0].diffuseColour.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[0].base.diffuseStrength"), pLights[0].diffuseStrength);
-		glUniform3f(glGetUniformLocation(program, "pLights[0].position"), pLights[0].position.x, pLights[0].position.y, pLights[0].position.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[0].constant"), pLights[0].constant);
-		glUniform1f(glGetUniformLocation(program, "pLights[0].linear"), pLights[0].linear);
-		glUniform1f(glGetUniformLocation(program, "pLights[0].exponent"), pLights[0].exponent);
-	
-		glUniform3f(glGetUniformLocation(program, "pLights[1].base.diffuseColour"), pLights[1].diffuseColour.x, pLights[1].diffuseColour.y, pLights[1].diffuseColour.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[1].base.diffuseStrength"), pLights[1].diffuseStrength);
-		glUniform3f(glGetUniformLocation(program, "pLights[1].position"), pLights[1].position.x, pLights[1].position.y, pLights[1].position.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[1].constant"), pLights[1].constant);
-		glUniform1f(glGetUniformLocation(program, "pLights[1].linear"), pLights[1].linear);
-		glUniform1f(glGetUniformLocation(program, "pLights[1].exponent"), pLights[1].exponent);
-
-		glUniform3f(glGetUniformLocation(program, "pLights[2].base.diffuseColour"), pLights[2].diffuseColour.x, pLights[2].diffuseColour.y, pLights[2].diffuseColour.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[2].base.diffuseStrength"), pLights[2].diffuseStrength);
-		glUniform3f(glGetUniformLocation(program, "pLights[2].position"), pLights[2].position.x, pLights[2].position.y, pLights[2].position.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[2].constant"), pLights[2].constant);
-		glUniform1f(glGetUniformLocation(program, "pLights[2].linear"), pLights[2].linear);
-		glUniform1f(glGetUniformLocation(program, "pLights[2].exponent"), pLights[2].exponent);
-
-		glUniform3f(glGetUniformLocation(program, "pLights[3].base.diffuseColour"), pLights[3].diffuseColour.x, pLights[3].diffuseColour.y, pLights[3].diffuseColour.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[3].base.diffuseStrength"), pLights[3].diffuseStrength);
-		glUniform3f(glGetUniformLocation(program, "pLights[3].position"), pLights[3].position.x, pLights[3].position.y, pLights[3].position.z);
-		glUniform1f(glGetUniformLocation(program, "pLights[3].constant"), pLights[3].constant);
-		glUniform1f(glGetUniformLocation(program, "pLights[3].linear"), pLights[3].linear);
-		glUniform1f(glGetUniformLocation(program, "pLights[3].exponent"), pLights[3].exponent);
-
+	// Set lights
+	setupLights();
 		
 
 	vao = 0; 
@@ -351,66 +402,67 @@ void init(void)
 	// ------------------------- BEGIN HEDGE MAZE -----------------------------
 
 	// Left Side
-	createCube(1.0f, glm::vec3(2.25f, 0.0f, -2.75f), 0.5f, 5.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(7.25f, 0.0f, -2.25f), 1.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(2.25f, 0.0f, -5.0f), 2.25f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(5.25f, 0.0f, -4.75f), 0.5f, 4.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(5.25f, 0.0f, -6.75f), 2.0f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(2.25f, 0.0f, -6.75f), 0.5f, 3.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(2.25f, 0.0f, -13.75f), 5.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(1.0f, 0.0f, -13.75f), 0.5f, 1.25f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(4.25, 0.0f, -10.75f), 3.0f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(4.75, 0.0f, -10.75f), 0.5f, 1.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(4.75f, 0.0f, -12.75f), 0.5f, 1.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(4.25f, 0.0f, -15.75f), 3.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(6.25f, 0.0f, -8.75f), 0.5f, 2.75f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(7.25f, 0.0f, -8.25f), 2.25f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(6.25f, 0.0f, -15.75f), 7.0f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(2.25f, 0.0f, -15.75f), 0.5f, 2.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(2.25f, 0.0f, -17.25f), 1.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(2.25f, 0.0f, -17.75), 0.5f, 5.75f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(0.75f, 0.0f, -20.75f), 0.5f, 4.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(6.0f, 0.0f, -19.75), 0.5f, 3.75f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(9.25f, 0.0f, -22.0f), 2.25f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(6.75f, 0.0f, -14.75f), 0.5f, 2.25f, 1.0f, hedgeTx);
+	placeCube(glm::vec3(2.25f, 0.0f, -2.75f), 0.5f, 5.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(7.25f, 0.0f, -2.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -5.0f), 2.25f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(5.25f, 0.0f, -4.75f), 0.5f, 4.0f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(5.25f, 0.0f, -6.75f), 2.0f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -6.75f), 0.5f, 3.0f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -13.75f), 5.5f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(1.0f, 0.0f, -13.75f), 0.5f, 1.25f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(4.25, 0.0f, -10.75f), 3.0f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(4.75, 0.0f, -10.75f), 0.5f, 1.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(4.75f, 0.0f, -12.75f), 0.5f, 1.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(4.25f, 0.0f, -15.75f), 3.5f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(6.25f, 0.0f, -8.75f), 0.5f, 2.75f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(7.25f, 0.0f, -8.25f), 2.25f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(6.25f, 0.0f, -15.75f), 7.0f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -15.75f), 0.5f, 2.0f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -17.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -17.75), 0.5f, 5.75f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(0.75f, 0.0f, -20.75f), 0.5f, 4.0f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(6.0f, 0.0f, -19.75), 0.5f, 3.75f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(9.25f, 0.0f, -22.0f), 2.25f, 0.5f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(6.75f, 0.0f, -14.75f), 0.5f, 2.25f, 1.0f, hedgeTx, 1.0f);
 
 	// middle
-	createCube(1.0f, glm::vec3(9.25f, 0.0f, -6.75f), 6.75f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(9.0f, 0.0f, -16.75f), 0.5f, 2.75f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(11.25f, 0.0f, -18.25f), 1.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(11.25f, 0.0f, -18.75f), 0.5f, 2.75f, 1.0f, hedgeTx);
+	placeCube(glm::vec3(9.25f, 0.0f, -6.75f), 6.75f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(9.0f, 0.0f, -16.75f), 0.5f, 2.75f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -18.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -18.75f), 0.5f, 2.75f, 1.0f, hedgeTx, 1.0f );
 
 	// right side
-	createCube(1.0f, glm::vec3(11.25f, 0.0f, -4.75f), 4.0f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(11.75f, 0.0f, -4.75f), 0.5f, 5.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(13.25f, 0.0f, -2.75f), 0.5f, 3.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(16.25f, 0.0f, -4.25f), 1.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(9.75f, 0.0f, -6.75f), 0.5f, 5.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(14.25f, 0.0f, -8.25f), 1.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(10.0f, 0.0f, -8.75f), 0.5f, 4.75f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(12.25f, 0.0f, -14.25f), 5.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(10.0f, 0.0f, -14.75f), 0.5f, 3.75f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(13.25f, 0.0f, -17.0f), 2.25f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(16.25f, 0.0f, -10.75f), 4.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(14.25f, 0.0f, -10.75f), 0.5f, 2.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(14.25f, 0.0f, -12.25f), 1.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(14.25f, 0.0f, -12.75f), 0.5f, 4.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(15.25f, 0.0f, -14.75f), 0.5f, 3.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(15.25f, 0.0f, -16.25f), 1.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(15.25f, 0.0f, -16.75f), 0.5f, 1.75f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(15.25f, 0.0f, -18.75f), 0.5f, 3.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(16.25f, 0.0f, -20.25f), 1.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(11.25f, 0.0f, -20.75f), 0.5f, 5.5f, 1.0f, hedgeTx);
+	placeCube(glm::vec3(11.25f, 0.0f, -4.75f), 4.0f, 0.5f, 1.0f,  hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.75f, 0.0f, -4.75f), 0.5f, 5.0f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(13.25f, 0.0f, -2.75f), 0.5f, 3.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(16.25f, 0.0f, -4.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(9.75f, 0.0f, -6.75f), 0.5f, 5.0f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(14.25f, 0.0f, -8.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(10.0f, 0.0f, -8.75f), 0.5f, 4.75f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(12.25f, 0.0f, -14.25f), 5.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(10.0f, 0.0f, -14.75f), 0.5f, 3.75f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(13.25f, 0.0f, -17.0f), 2.25f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(16.25f, 0.0f, -10.75f), 4.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(14.25f, 0.0f, -10.75f), 0.5f, 2.0f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(14.25f, 0.0f, -12.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(14.25f, 0.0f, -12.75f), 0.5f, 4.0f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(15.25f, 0.0f, -14.75f), 0.5f, 3.0f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(15.25f, 0.0f, -16.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(15.25f, 0.0f, -16.75f), 0.5f, 1.75f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(15.25f, 0.0f, -18.75f), 0.5f, 3.0f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(16.25f, 0.0f, -20.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -20.75f), 0.5f, 5.5f, 1.0f, hedgeTx, 1.0f );
 
 	// borders
-	createCube(1.0f, glm::vec3(0.25f, 0.0f, -22.75f), 22.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(18.25f, 0.0f, -22.75f), 22.5f, 0.5f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(0.75f, 0.0f, -0.75), 0.5f, 7.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(0.75f, 0.0f, -22.75f), 0.5f, 7.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(11.25f, 0.0f, -0.75f), 0.5f, 7.0f, 1.0f, hedgeTx);
-	createCube(1.0f, glm::vec3(11.25f, 0.0f, -22.75f), 0.5f, 7.0f, 1.0f, hedgeTx);
+	placeCube(glm::vec3(0.25f, 0.0f, -22.75f), 22.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(18.25f, 0.0f, -22.75f), 22.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(0.75f, 0.0f, -0.75), 0.5f, 7.0f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(0.75f, 0.0f, -22.75f), 0.5f, 7.0f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -0.75f), 0.5f, 7.0f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -22.75f), 0.5f, 7.0f, 1.0f, hedgeTx, 1.0f );
 
-
+	// stone platform
+	placeCube(glm::vec3(8.0f, 0.0f, -13.5f), 4.0f, 3.0f, 0.5f, stoneTx, 1.0f);
 	// ------------------------ End Hedge Maze --------------------------------
 
 	
@@ -441,16 +493,16 @@ void display(void)
 	// Draw all shapes.
 
 	// Grid Guideline
-	glBindTexture(GL_TEXTURE_2D, blankTx);
+	glBindTexture(GL_TEXTURE_2D, groundTx);
 	g_grid.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
 	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, -90.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 	glDrawElements(GL_LINE_STRIP, g_grid.NumIndices(), GL_UNSIGNED_SHORT, 0);
 
 
-	glBindTexture(GL_TEXTURE_2D, brickTx);
+	glBindTexture(GL_TEXTURE_2D, groundTx);
 	g_plane.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
 	g_plane.ColorShape(1.0f, 0.65f, 0.1f);
-	transformObject(glm::vec3(40.0f, 40.0f, 1.0f), X_AXIS, -90.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+	transformObject(glm::vec3(21.0f, 27.0f, 1.0f), X_AXIS, -90.0f, glm::vec3(-1.0f, 0.0f, 2.0f));
 	glDrawElements(GL_TRIANGLES, g_plane.NumIndices(), GL_UNSIGNED_SHORT, 0);
 
 	glUniform3f(glGetUniformLocation(program, "pLights[0].position"), pLights[0].position.x, pLights[0].position.y, pLights[0].position.z);
@@ -458,48 +510,6 @@ void display(void)
 	glUniform3f(glGetUniformLocation(program, "pLights[2].position"), pLights[2].position.x, pLights[2].position.y, pLights[2].position.z);
 	glUniform3f(glGetUniformLocation(program, "pLights[3].position"), pLights[3].position.x, pLights[3].position.y, pLights[3].position.z);
 
-	// Walls
-
-	//glBindTexture(GL_TEXTURE_2D, blankTx);
-	////g_cube.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	//transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(5.0f, 0.0f, -2.0f));
-	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-	//	
-
-	// tested the cube in display
-
-	//// Hedge Maze Borders
-	//glBindTexture(GL_TEXTURE_2D, hedgeTx);
-	//g_cube.BufferLongHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	//transformObject(glm::vec3(1.0f, 1.0f, 23.0f), X_AXIS, 0.0f, glm::vec3(0.0f, 0.0f, -23.0f));
-	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-
-	//glBindTexture(GL_TEXTURE_2D, hedgeTx);
-	//g_cube.BufferLongHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	//transformObject(glm::vec3(1.0f, 1.0f, 23.0f), X_AXIS, 0.0f, glm::vec3(18.0f, 0.0f, -23.0f));
-	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-
-	//glBindTexture(GL_TEXTURE_2D, hedgeTx);
-	//g_cube.BufferWideHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	//transformObject(glm::vec3(7.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(1.0f, 0.0f, -1.0f));
-	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-
-	//glBindTexture(GL_TEXTURE_2D, hedgeTx);
-	//g_cube.BufferWideHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	//transformObject(glm::vec3(7.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(1.0f, 0.0f, -23.0f));
-	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-
-	//glBindTexture(GL_TEXTURE_2D, hedgeTx);
-	//g_cube.BufferWideHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	//transformObject(glm::vec3(7.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(11.0f, 0.0f, -1.0f));
-	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-
-	//glBindTexture(GL_TEXTURE_2D, hedgeTx);
-	//g_cube.BufferWideHedge(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	//transformObject(glm::vec3(7.0f, 1.0f, 1.0f), X_AXIS, 0.0f, glm::vec3(11.0f, 0.0f, -23.0f));
-	//glDrawElements(GL_TRIANGLES, g_cube.NumIndices(), GL_UNSIGNED_SHORT, 0);
-
-	//------------------------- END Hedge borders ----------------------------------
 
 	// Draw all the shapes
 	for (std::vector<ShapeInfo>::iterator it = Shapes.begin(); it != Shapes.end(); ++it) {
@@ -683,8 +693,8 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
 	glutSetOption(GLUT_MULTISAMPLE, 8);
-	glutInitWindowSize(1000, 1000);
-	glutCreateWindow("GAME2012_A4_HoVincent");
+	glutInitWindowSize(1024, 1024);
+	glutCreateWindow("GAME2012_FinalProject_HoVincent_KumarVineet");
 
 	glewInit();	//Initializes the glew and prepares the drawing pipeline.
 	init();
