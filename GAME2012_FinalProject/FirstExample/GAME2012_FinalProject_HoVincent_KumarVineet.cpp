@@ -122,8 +122,8 @@ Grid g_grid(40);
 Cube g_cube;
 Prism g_prism(24);
 Plane g_plane;
-ClonedCone g_clonedCone(12);
-ClonedPrism g_clonedPrism(12);
+ClonedCone g_clonedCone(12,3);
+ClonedPrism g_clonedPrism(12,3);
 // where we set up objects
 Cube test_cube(5.0f, 6.0f, 7.0f);
 
@@ -159,7 +159,7 @@ void placeCylinder(glm::vec3 pos, float sides, float h, GLuint id, glm::vec3 sca
 	glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
 {
 	ShapeInfo s;
-	s.shape = ClonedPrism(sides);
+	s.shape = ClonedPrism(sides,h);
 	s.scale = scale;
 	s.color = c;
 	s.position = pos;
@@ -173,7 +173,7 @@ void placeCone(glm::vec3 pos, float sides, float h, GLuint id, glm::vec3 scale,
 	glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
 {
 	ShapeInfo s;
-	s.shape = ClonedCone(sides);
+	s.shape = ClonedCone(sides,h);
 	s.scale = scale;
 	s.color = c;
 	s.position = pos;
@@ -498,16 +498,17 @@ void init(void)
 	// ------------------------ Castle Walls --------------------------------
 	placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
 	placeCube(glm::vec3(-1.0f, 4.0f, -22.75f), 23.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-1.0f, 4.25f, -0.75f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
 	//placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
 	
 
 	// ------------------------ Castle Corners --------------------------------
-	placeCylinder(glm::vec3(-0.7f, 0.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	placeCylinder(glm::vec3(-0.7f, 1.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCylinder(glm::vec3(-0.75f, 0.0f, 0.1f), 12, 5, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	/*placeCylinder(glm::vec3(-0.7f, 1.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
 	placeCylinder(glm::vec3(-0.7f, 2.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
 	placeCylinder(glm::vec3(-0.7f, 3.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	placeCylinder(glm::vec3(-0.7f, 4.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
-	placeCone(glm::vec3(-1.2f, 5.0f, -0.4f), 10, 1, castleWallsTx, { 2.0f,2.0f,2.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCylinder(glm::vec3(-0.7f, 4.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);*/
+	placeCone(glm::vec3(-1.25f, 5.0f, -0.4f), 10, 2, castleWallsTx, { 2.0f,1.0f,2.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 	
 
 	// Enable depth test and blend.
@@ -599,7 +600,7 @@ void display(void)
 	// Draw all the shapes
 	for (std::vector<ShapeInfo>::iterator it = Shapes.begin(); it != Shapes.end(); ++it) {
 		DrawShape(*it);
-		std::cout << Shapes.size() << std::endl;
+		//std::cout << Shapes.size() << std::endl;
 	}
 
 

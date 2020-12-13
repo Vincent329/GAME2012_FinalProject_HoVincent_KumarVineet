@@ -26,5 +26,5 @@ D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\
 D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(162,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(176,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(429,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(576,21): warning C4018: '<': signed/unsigned mismatch
+D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\FirstExample\GAME2012_FinalProject_HoVincent_KumarVineet.cpp(577,21): warning C4018: '<': signed/unsigned mismatch
   FirstExample.vcxproj -> D:\Year 2 Code\3D Graphics Programming\Final Project\Repo\GAME2012_FinalProject\Debug\FirstExample.exe
