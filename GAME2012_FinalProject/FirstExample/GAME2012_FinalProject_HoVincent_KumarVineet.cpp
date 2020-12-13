@@ -67,7 +67,7 @@ GLfloat pitch, yaw;
 int lastX, lastY;
 
 // Texture variables.
-GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx, bonusKeyTx;
+GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx, bonusKeyTx, castleWallsTx;
 GLint width, height, bitDepth;
 
 // Light positioning
@@ -107,6 +107,7 @@ bool keyDeposited_1 = false;
 bool printStatus_KeyCollected = false;
 bool printStatus_KeyDeposited = false;
 bool printStatus_NearGate = false;
+bool hoverAnimation = false;
 
 void timer(int);
 
@@ -379,11 +380,23 @@ void init(void)
 
 	// Bonus Key
 	unsigned char* image6 = stbi_load("tx_bonus_key.png", &width, &height, &bitDepth, 0);
-	if (!image4) cout << "Unable to load file!" << endl;
+	if (!image6) cout << "Unable to load file!" << endl;
 
 	glGenTextures(1, &bonusKeyTx);
 	glBindTexture(GL_TEXTURE_2D, bonusKeyTx);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image6);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	// Castle Walls Key
+	unsigned char* image7 = stbi_load("tx_brick_bright.jpg", &width, &height, &bitDepth, 0);
+	if (!image7) cout << "Unable to load file!" << endl;
+
+	glGenTextures(1, &castleWallsTx);
+	glBindTexture(GL_TEXTURE_2D, castleWallsTx);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image7);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -485,8 +498,18 @@ void init(void)
 	placeCube(glm::vec3(8.0f, 0.0f, -13.5f), 4.0f, 3.0f, 0.5f, stoneTx, 1.0f);
 	// ------------------------ End Hedge Maze --------------------------------
 
-	
 
+	// ------------------------ Castle Walls --------------------------------
+	placeCube(glm::vec3(-0.5f, 0.0f, -22.75f), 23.0f, 0.5f, 4.0f, castleWallsTx, 1.0f);
+
+	// ------------------------ Castle Corners --------------------------------
+	placeCylinder(glm::vec3(-0.7f, 0.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCylinder(glm::vec3(-0.7f, 1.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCylinder(glm::vec3(-0.7f, 2.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCylinder(glm::vec3(-0.7f, 3.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCylinder(glm::vec3(-0.7f, 4.0f, 0.1f), 12, 2, castleWallsTx, {1.0f,1.0f,1.0f,}, {1.0f,1.0f,1.0f},{0,1,0},0);
+	placeCone(glm::vec3(-0.7f, 5.0f, 0.1f), 10, 1, castleWallsTx, { 1.0f,1.0f,1.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	
 
 	// Enable depth test and blend.
 	glEnable(GL_DEPTH_TEST);
@@ -537,6 +560,7 @@ void display(void)
 	{
 		//std::cout << "Shapes size = " << Shapes.size() << std::endl;
 		keyPosition_1 = { 15.25f, 0.0f, -12.0f };
+	
 		placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
 
 		if (abs(position.x - keyPosition_1.x) < 2.0f && abs(position.z - keyPosition_1.z) < 2.0f && abs(position.y - keyPosition_1.y) < 2.0f)
