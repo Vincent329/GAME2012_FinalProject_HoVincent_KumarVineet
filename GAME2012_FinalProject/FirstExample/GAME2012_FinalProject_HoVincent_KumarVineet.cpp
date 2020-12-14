@@ -479,64 +479,64 @@ void init(void)
 	// ------------------------- BEGIN HEDGE MAZE -----------------------------
 
 	// Left Side
-	placeCube(glm::vec3(2.25f, 0.0f, -2.75f), 0.5f, 5.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(7.25f, 0.0f, -2.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(2.25f, 0.0f, -5.0f), 2.25f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(5.25f, 0.0f, -4.75f), 0.5f, 4.0f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(5.25f, 0.0f, -6.75f), 2.0f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(2.25f, 0.0f, -6.75f), 0.5f, 3.0f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(2.25f, 0.0f, -13.75f), 5.5f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(1.0f, 0.0f, -13.75f), 0.5f, 1.25f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(4.25, 0.0f, -10.75f), 3.0f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(4.75, 0.0f, -10.75f), 0.5f, 1.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(4.75f, 0.0f, -12.75f), 0.5f, 1.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(4.25f, 0.0f, -15.75f), 3.5f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(6.25f, 0.0f, -8.75f), 0.5f, 2.75f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(7.25f, 0.0f, -8.25f), 2.25f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(6.25f, 0.0f, -15.75f), 7.0f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(2.25f, 0.0f, -15.75f), 0.5f, 2.0f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(2.25f, 0.0f, -17.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(2.25f, 0.0f, -17.75), 0.5f, 5.75f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(0.75f, 0.0f, -20.75f), 0.5f, 4.0f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(6.0f, 0.0f, -19.75), 0.5f, 3.75f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(9.25f, 0.0f, -22.0f), 2.25f, 0.5f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(6.75f, 0.0f, -14.75f), 0.5f, 2.25f, 1.0f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -2.75f), 0.5f, 5.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(7.25f, 0.0f, -2.25f), 1.5f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -5.0f), 2.25f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(5.25f, 0.0f, -4.75f), 0.5f, 4.0f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(5.25f, 0.0f, -6.75f), 2.0f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -6.75f), 0.5f, 3.0f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -13.75f), 5.5f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(1.0f, 0.0f, -13.75f), 0.5f, 1.25f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(4.25, 0.0f, -10.75f), 3.0f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(4.75, 0.0f, -10.75f), 0.5f, 1.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(4.75f, 0.0f, -12.75f), 0.5f, 1.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(4.25f, 0.0f, -15.75f), 3.5f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(6.25f, 0.0f, -8.75f), 0.5f, 2.75f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(7.25f, 0.0f, -8.25f), 2.25f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(6.25f, 0.0f, -15.75f), 7.0f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -15.75f), 0.5f, 2.0f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -17.25f), 1.5f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(2.25f, 0.0f, -17.75), 0.5f, 5.75f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(0.75f, 0.0f, -20.75f), 0.5f, 4.0f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(6.0f, 0.0f, -19.75), 0.5f, 3.75f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(9.25f, 0.0f, -22.0f), 2.25f, 0.5f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(6.75f, 0.0f, -14.75f), 0.5f, 2.25f, 1.5f, hedgeTx, 1.0f);
 
 	// middle
-	placeCube(glm::vec3(9.25f, 0.0f, -6.75f), 6.75f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(9.0f, 0.0f, -16.75f), 0.5f, 2.75f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(11.25f, 0.0f, -18.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(11.25f, 0.0f, -18.75f), 0.5f, 2.75f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(9.25f, 0.0f, -6.75f), 6.75f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(9.0f, 0.0f, -16.75f), 0.5f, 2.75f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -18.25f), 1.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -18.75f), 0.5f, 2.75f, 1.5f, hedgeTx, 1.0f );
 
 	// right side
-	placeCube(glm::vec3(11.25f, 0.0f, -4.75f), 4.0f, 0.5f, 1.0f,  hedgeTx, 1.0f );
-	placeCube(glm::vec3(11.75f, 0.0f, -4.75f), 0.5f, 5.0f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(13.25f, 0.0f, -2.75f), 0.5f, 3.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(16.25f, 0.0f, -4.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(9.75f, 0.0f, -6.75f), 0.5f, 5.0f, 1.0f, hedgeTx, 1.0f);
-	placeCube(glm::vec3(14.25f, 0.0f, -8.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(10.0f, 0.0f, -8.75f), 0.5f, 4.75f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(12.25f, 0.0f, -14.25f), 5.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(10.0f, 0.0f, -14.75f), 0.5f, 3.75f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(13.25f, 0.0f, -17.0f), 2.25f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(16.25f, 0.0f, -10.75f), 4.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(14.25f, 0.0f, -10.75f), 0.5f, 2.0f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(14.25f, 0.0f, -12.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(14.25f, 0.0f, -12.75f), 0.5f, 4.0f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(15.25f, 0.0f, -14.75f), 0.5f, 3.0f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(15.25f, 0.0f, -16.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(15.25f, 0.0f, -16.75f), 0.5f, 1.75f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(15.25f, 0.0f, -18.75f), 0.5f, 3.0f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(16.25f, 0.0f, -20.25f), 1.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(11.25f, 0.0f, -20.75f), 0.5f, 5.5f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -4.75f), 4.0f, 0.5f, 1.5f,  hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.75f, 0.0f, -4.75f), 0.5f, 5.0f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(13.25f, 0.0f, -2.75f), 0.5f, 3.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(16.25f, 0.0f, -4.25f), 1.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(9.75f, 0.0f, -6.75f), 0.5f, 5.0f, 1.5f, hedgeTx, 1.0f);
+	placeCube(glm::vec3(14.25f, 0.0f, -8.25f), 1.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(10.0f, 0.0f, -8.75f), 0.5f, 4.75f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(12.25f, 0.0f, -14.25f), 5.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(10.0f, 0.0f, -14.75f), 0.5f, 3.75f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(13.25f, 0.0f, -17.0f), 2.25f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(16.25f, 0.0f, -10.75f), 4.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(14.25f, 0.0f, -10.75f), 0.5f, 2.0f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(14.25f, 0.0f, -12.25f), 1.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(14.25f, 0.0f, -12.75f), 0.5f, 4.0f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(15.25f, 0.0f, -14.75f), 0.5f, 3.0f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(15.25f, 0.0f, -16.25f), 1.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(15.25f, 0.0f, -16.75f), 0.5f, 1.75f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(15.25f, 0.0f, -18.75f), 0.5f, 3.0f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(16.25f, 0.0f, -20.25f), 1.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -20.75f), 0.5f, 5.5f, 1.5f, hedgeTx, 1.0f );
 
 	// borders
-	placeCube(glm::vec3(0.25f, 0.0f, -22.75f), 22.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(18.25f, 0.0f, -22.75f), 22.5f, 0.5f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(0.75f, 0.0f, -0.75), 0.5f, 7.0f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(0.75f, 0.0f, -22.75f), 0.5f, 7.0f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(11.25f, 0.0f, -0.75f), 0.5f, 7.0f, 1.0f, hedgeTx, 1.0f );
-	placeCube(glm::vec3(11.25f, 0.0f, -22.75f), 0.5f, 7.0f, 1.0f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(0.25f, 0.0f, -22.75f), 22.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(18.25f, 0.0f, -22.75f), 22.5f, 0.5f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(0.75f, 0.0f, -0.75), 0.5f, 7.0f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(0.75f, 0.0f, -22.75f), 0.5f, 7.0f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -0.75f), 0.5f, 7.0f, 1.5f, hedgeTx, 1.0f );
+	placeCube(glm::vec3(11.25f, 0.0f, -22.75f), 0.5f, 7.0f, 1.5f, hedgeTx, 1.0f );
 
 	// stone platform
 	placeCube(glm::vec3(8.0f, 0.0f, -13.5f), 4.0f, 3.0f, 0.5f, stoneTx, 1.0f);
@@ -570,11 +570,11 @@ void init(void)
 	// ------------------------ Castle Corners --------------------------------
 	// Tower 1
 	placeCylinder(glm::vec3(-2.25f, 0.0f, -0.1f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(-2.75f, 5.0f, -0.375f), 10, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(-2.75f, 5.0f, -0.375f), 12, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 
 	// Tower 2
 	placeCylinder(glm::vec3(-2.25f, 0.0f, -26.75f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(-2.75f, 5.0f, -27.25f), 10, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(-2.75f, 5.0f, -27.25f), 12, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 
 
 	//Right 
@@ -602,11 +602,11 @@ void init(void)
 	// ------------------------ Castle Corners --------------------------------
 	// Tower 3
 	placeCylinder(glm::vec3(19.25f, 0.0f, -0.1f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(18.75f, 5.0f, -0.5f), 10, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(18.75f, 5.0f, -0.5f), 12, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 
 	// Tower 4
 	placeCylinder(glm::vec3(19.25f, 0.0f, -26.75f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(18.75f, 5.0f, -27.5f), 10, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(18.75f, 5.0f, -27.5f), 12, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 
 	
 	//Back Wall ----
