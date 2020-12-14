@@ -631,7 +631,6 @@ void init(void)
 		}
 	}
 
-	// ------------------------- Vince -----------------
 	// ------------------------- Back Wall and Gatehouse -----------------------------
 	placeCube(glm::vec3(-1.0f, 0.0f, -26.5f), 1.5f, 9.0f, 4.0f, castleWallsTx, 1.0f);
 	placeCube(glm::vec3(11.0f, 0.0f, -26.5f), 1.5f, 9.0f, 4.0f, castleWallsTx, 1.0f);
