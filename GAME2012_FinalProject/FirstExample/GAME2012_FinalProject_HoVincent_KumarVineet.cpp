@@ -576,26 +576,26 @@ void init(void)
 
 	
 	//Back Wall ----
-	placeCube(glm::vec3(-1.5f, 0.0f, 0.25f), 1.25f, 22.0f, 4.0f, castleWallsTx, 1.0f);
-	//placeCube(glm::vec3(19.0f, 4.0f, -25.75f), 26.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
-	//placeCube(glm::vec3(21.0f, 4.0f, -25.75f), 26.0f, 0.5f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-1.5f, 0.0f, 0.5f), 0.75f, 22.0f, 4.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-1.5f, 4.0f, 1.25f), 0.25f, 22.0f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(-1.5f, 4.0f, 0.25f), 0.25f, 22.0f, 0.25f, castleWallsTx, 1.0f);
 
 	// Battlements - merlons and crenels
 	// Back
-	/*float merlon_3 = -0.75f;
-	for (int i = 0; i < 17; i++, merlon_2 -= 1.5f)
+	float merlon_3 = -0.25f;
+	for (int i = 0; i < 13; i++, merlon_3 += 1.5f)
 	{
-		if (i == 16 || i == 0)
+		if (i == 12 || i == 0)
 		{
-			placeCube(glm::vec3(19.0f, 4.25f, merlon_3), 1.5f, 0.5f, 0.75f, castleWallsTx, 1.0f);
-			placeCube(glm::vec3(21.0f, 4.25f, merlon_3), 1.5f, 0.5f, 0.75f, castleWallsTx, 1.0f);
-		}
-		else
+			placeCube(glm::vec3(merlon_3, 4.25f, 0.0f), 0.5f, 1.25f, 0.75f, castleWallsTx, 1.0f);
+			placeCube(glm::vec3(merlon_3, 4.25f, 1.25f), 0.5f, 1.25f, 0.75f, castleWallsTx, 1.0f);
+		}													
+		else												
 		{
-			placeCube(glm::vec3(19.0f, 4.25f, merlon_3), 1.250f, 0.5f, 0.75f, castleWallsTx, 1.0f);
-			placeCube(glm::vec3(21.0f, 4.25f, merlon_3), 1.250f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+			placeCube(glm::vec3(merlon_3, 4.25f, 0.0f), 0.5f, 1.25f, 0.75f, castleWallsTx, 1.0f);
+			placeCube(glm::vec3(merlon_3, 4.25f, 1.25f), 0.5f, 1.25f, 0.75f, castleWallsTx, 1.0f);
 		}
-	}*/
+	}
 
 	// ------------------------- Vince -----------------
 	// ------------------------- Back Wall and Gatehouse -----------------------------
