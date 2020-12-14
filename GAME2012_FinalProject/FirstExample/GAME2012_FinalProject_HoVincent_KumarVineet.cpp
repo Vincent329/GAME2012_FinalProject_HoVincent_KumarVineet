@@ -1,11 +1,15 @@
-﻿//***************************************************************************
+﻿//*************************************************************************************************************
 // GAME2012_FinalProject_HoVincent_KumarVineet.cpp by Vincent Ho and Vineet Kumar (C) 2020 All Rights Reserved.
+// 
+//				Vincent Ho			Vineet Kumar
+// Student ID:	101334300			101273532
 //
 // Final Project Submission
 //
 // Description:
-// 
-//*****************************************************************************
+// -	All the requirements of the project have been met.
+// -	Including the bonus mechanics also. The messages are shown in the console 
+//*************************************************************************************************************
 
 
 using namespace std;
@@ -310,20 +314,20 @@ void init(void)
 	// Image loading.
 	stbi_set_flip_vertically_on_load(true);
 
-	unsigned char* image = stbi_load("d6.png", &width, &height, &bitDepth, 0);
-	if (!image) cout << "Unable to load file!" << endl;
+	//unsigned char* image = stbi_load("d6.png", &width, &height, &bitDepth, 0);
+	//if (!image) cout << "Unable to load file!" << endl;
 
-	glGenTextures(1, &alexTx);
-	glBindTexture(GL_TEXTURE_2D, alexTx);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	//glBindTexture(GL_TEXTURE_2D, 0);
-	stbi_image_free(image);
+	//glGenTextures(1, &alexTx);
+	//glBindTexture(GL_TEXTURE_2D, alexTx);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	//// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//glGenerateMipmap(GL_TEXTURE_2D);
+	////glBindTexture(GL_TEXTURE_2D, 0);
+	//stbi_image_free(image);
 
 	// Second texture. Blank one.
 	
