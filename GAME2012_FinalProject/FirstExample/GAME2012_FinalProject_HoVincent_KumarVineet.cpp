@@ -63,7 +63,7 @@ GLfloat pitch, yaw;
 int lastX, lastY;
 
 // Texture variables.
-GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx, bonusKeyTx, castleWallsTx;
+GLuint alexTx, blankTx, brickTx, hedgeTx, groundTx, castleTx, doorTx, roofTx, stoneTx, bonusKeyTx, bonusKeyTx2, castleWallsTx;
 GLint width, height, bitDepth;
 
 // Light positioning
@@ -96,7 +96,7 @@ PointLight pLights[4] = { { glm::vec3(7.5f, 1.5f, -5.0f),	10.0f, glm::vec3(1.0f,
 Material mat = { 0.1f, 32 }; // Alternate way to construct an object.
 
 // Bonus Key
-glm::vec3  keyPosition_1 = { 15.25f, 0.0f, -12.0f }, depositPosition_1 = { 9.0f, 0.5f, -12.0f };
+glm::vec3  keyPosition_1 = { 15.25f, 0.0f, -12.0f }, depositPosition_1 = { 9.0f, -1.5f, -12.0f };//= { 9.0f, 0.5f, -12.0f };
 glm::vec3 gatePosition_1 = { 9.0f, 0.25,-23.5 };
 bool keyCollected_1 = false;
 bool keyDeposited_1 = false;
@@ -385,6 +385,19 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	stbi_image_free(image6);
+
+	// Bonus Key 2
+	unsigned char* image66 = stbi_load("tx_bonus_key.png", &width, &height, &bitDepth, 0);
+	if (!image6) cout << "Unable to load file!" << endl;
+
+	glGenTextures(1, &bonusKeyTx2);
+	glBindTexture(GL_TEXTURE_2D, bonusKeyTx2);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image66);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	stbi_image_free(image66);
 
 	// Castle Walls Key
 	unsigned char* image7 = stbi_load("tx_brick_bright.jpg", &width, &height, &bitDepth, 0);
@@ -695,7 +708,7 @@ void init(void)
 
 	// Bonus
 	placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
-	placeCube(depositPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
+	placeCube(depositPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx2, 1);
 
 	// Enable depth test and blend.
 	glEnable(GL_DEPTH_TEST);
@@ -764,11 +777,19 @@ void display(void)
 				//break;
 			}
 		}
-		if (abs(position.x - depositPosition_1.x) < 2.0f && abs(position.z - depositPosition_1.z) < 2.0f && abs(position.y - depositPosition_1.y) < 2.0f)
+		if (abs(position.x - depositPosition_1.x) < 3.0f && abs(position.z - depositPosition_1.z) < 3.0f && abs(position.y - depositPosition_1.y) < 3.0f)
 		{
-			//std::cout << " You have the key, Deposit it! " << position.x << std::endl;
+			std::cout << " You have the key, Deposit it! " << position.x << std::endl;
 			keyDeposited_1 = true;
 			printStatus_KeyDeposited = true;
+			depositPosition_1 = { 9.0f, 0.5f, -12.0f };
+			for(int i = 0; i < Shapes.size(); i++)
+			{
+				if(Shapes[i].textureID == bonusKeyTx2)
+				{
+					Shapes[i].position = depositPosition_1;
+				}
+			}
 		}
 	}
 
