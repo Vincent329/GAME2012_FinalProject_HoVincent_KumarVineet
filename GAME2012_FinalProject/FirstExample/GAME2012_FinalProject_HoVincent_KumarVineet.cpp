@@ -96,8 +96,8 @@ PointLight pLights[4] = { { glm::vec3(7.5f, 1.5f, -5.0f),	10.0f, glm::vec3(1.0f,
 Material mat = { 0.1f, 32 }; // Alternate way to construct an object.
 
 // Bonus Key
-glm::vec3 keyPosition_1, depositPosition_1 = { 9.0f, 0.5f, -12.0f };
-glm::vec3 gatePosition_1 = { 9.0f, 0.25,-20 };
+glm::vec3  keyPosition_1 = { 15.25f, 0.0f, -12.0f }, depositPosition_1 = { 9.0f, 0.5f, -12.0f };
+glm::vec3 gatePosition_1 = { 9.0f, 0.25,-23.5 };
 bool keyCollected_1 = false;
 bool keyDeposited_1 = false;
 bool printStatus_KeyCollected = false;
@@ -629,6 +629,10 @@ void init(void)
 	placeCube(glm::vec3(8.0f, 1.0f, -26.0f), 0.25f, 3.0f, 3.0f, doorTx, 1.0f);
 
 
+	// Bonus
+	placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
+	placeCube(depositPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
+
 	// Enable depth test and blend.
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -677,16 +681,12 @@ void display(void)
 	if (!keyCollected_1)
 	{
 		//std::cout << "Shapes size = " << Shapes.size() << std::endl;
-		keyPosition_1 = { 15.25f, 0.0f, -12.0f };
-	
-		//placeCube(keyPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1);
-
+		
 		if (abs(position.x - keyPosition_1.x) < 2.0f && abs(position.z - keyPosition_1.z) < 2.0f && abs(position.y - keyPosition_1.y) < 2.0f)
 		{
 			//std::cout << " In Collision! " << std::endl;
 			printStatus_KeyCollected = true;
 			keyCollected_1 = true;
-
 		}
 	}
 
@@ -712,7 +712,7 @@ void display(void)
 	if (keyDeposited_1)
 	{
 		//placeCube(depositPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1.0f);
-		//std::cout << "Ready to Go !" << std::endl;
+		std::cout << "Ready to Go !" << std::endl;
 	}
 
 	// Draw all the shapes
