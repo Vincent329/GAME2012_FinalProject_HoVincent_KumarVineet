@@ -618,12 +618,76 @@ void init(void)
 	// separator
 	placeCube(glm::vec3(9.48f, 1.0f, -26.05f), 0.35f, 0.02f, 4.0f, blankTx, 1.0f);
 
+	// --------------------------- merlons and crenels for front gate ---------------------------
+
+
+	// --------------------------- left side ---------------------------
+	placeCube(glm::vec3(-1.0f, 4.0f, -27.0f), 2.5f, 7.0f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(6.0f, 4.25f, -27.0f), 2.5f, 1.0f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(6.0f, 4.5f, -25.0f), 0.5f, 1.0f, 0.75f, castleWallsTx, 1.0f);
+
+	float merlon_front_1 = 0.0f;
+	placeCube(glm::vec3(0.0f, 4.25f, -27.0f), 0.5f, 1.250f, 0.75f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(1.5f, 4.25f, -27.0f), 0.5f, 1.250f, 0.75f, castleWallsTx, 1.0f);
+
+	for (int i = 0; i < 4; i++, merlon_front_1 += 1.5)
+	{
+		placeCube(glm::vec3(merlon_front_1, 4.25f, -25.0f), 0.5f, 1.250f, 0.75f, castleWallsTx, 1.0f);
+	}
+
+	placeCube(glm::vec3(3.0f, 5.0f, -27.5f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(3.75f, 5.0f, -27.5f), 0.5f, 1.0f, 0.75f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(5.0f, 5.0f, -28.5f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(6.5f, 5.0f, -28.5f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+
+	//------------------------ middle -----------------------
+	// top wall
+	placeCube(glm::vec3(7.0f, 4.75f, -25.0f), 0.5f, 5.0f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(7.0f, 4.75f, -27.0f), 0.5f, 5.0f, 0.25f, castleWallsTx, 1.0f);
+
+	float merlons_middle = 7.25f;
+	for (int i = 0; i < 3; i++, merlons_middle += 1.5)
+	{
+		placeCube(glm::vec3(merlons_middle, 5.0f, -25.0f), 0.5f, 1.250f, 0.75f, castleWallsTx, 1.0f);
+		placeCube(glm::vec3(merlons_middle, 5.0f, -27.0f), 0.5f, 1.250f, 0.75f, castleWallsTx, 1.0f);
+
+	}
+	// ------------------------- end middle -----------------------
+
+	// -------------------- right wall ----------------------------
+	placeCube(glm::vec3(13.0f, 4.0f, -27.0f),  2.5f, 7.0f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(12.0f, 4.25f, -27.0f), 2.5f, 1.0f, 0.25f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(12.0f, 4.5f, -25.0f), 0.5f, 1.0f, 0.75f, castleWallsTx, 1.0f);
+
+	float merlon_front_2 = 13.25f;
+	placeCube(glm::vec3(16.25, 4.25f, -27.0f), 0.5f, 1.250f, 0.75f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(17.75, 4.25f, -27.0f), 0.5f, 1.250f, 0.75f, castleWallsTx, 1.0f);
+
+	for (int i = 0; i < 4; i++, merlon_front_2 += 1.5)
+	{
+		placeCube(glm::vec3(merlon_front_2, 4.25f, -25.0f), 0.5f, 1.250f, 0.75f, castleWallsTx, 1.0f);
+	}
+
+	placeCube(glm::vec3(15.5f, 5.0f, -27.5f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(14.25f, 5.0f, -27.5f), 0.5f, 1.0f, 0.75f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(12.0f, 5.0f, -28.5f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(13.5f, 5.0f, -28.5f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
+
 
 	// ------------------------- Stairs -------------------------------
 	placeCube(glm::vec3(8.0f, 0.0f, -24.0f), 1.0f, 3.0f, 0.5f, stoneTx, 1.0f);
-	placeCube(glm::vec3(7.0f, 0.0f, -25.0f), 1.0f, 5.0f, 1.0f, stoneTx, 1.0f);
+	placeCube(glm::vec3(8.0f, 0.0f, -25.0f), 1.0f, 3.0f, 1.0f, stoneTx, 1.0f);
 	placeCube(glm::vec3(8.0f, 0.0f, -27.0f), 2.0f, 3.0f, 1.0f, stoneTx, 1.0f);
 	placeCube(glm::vec3(8.0f, 0.0f, -28.0f), 2.0f, 3.0f, 0.5f, stoneTx, 1.0f);
+
+	placeCube(glm::vec3(7.5f, 0.0f, -24.0f), 1.0f,  0.5f, 1.5f,  castleWallsTx, 1.0f);
+	placeCube(glm::vec3(7.5f, 0.0f, -25.0f), 1.0f,  0.5f, 2.0f,  castleWallsTx, 1.0f);
+	placeCube(glm::vec3(11.0f, 0.0f, -24.0f), 1.0f, 0.5f, 1.5f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(11.0f, 0.0f, -25.0f), 1.0f, 0.5f, 2.0f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(7.5f, 0.0f,  -28.5f), 1.0f, 0.5f, 1.5f,  castleWallsTx, 1.0f);
+	placeCube(glm::vec3(7.5f, 0.0f,  -27.5f), 1.5f, 0.5f, 2.0f,  castleWallsTx, 1.0f);
+	placeCube(glm::vec3(11.0f, 0.0f, -28.5f), 1.0f, 0.5f, 1.5f, castleWallsTx, 1.0f);
+	placeCube(glm::vec3(11.0f, 0.0f, -27.5f), 1.5f, 0.5f, 2.0f, castleWallsTx, 1.0f);
 
 	// door
 	placeCube(glm::vec3(8.0f, 1.0f, -26.0f), 0.25f, 3.0f, 3.0f, doorTx, 1.0f);
@@ -660,7 +724,7 @@ void display(void)
 	// Grid Guideline
 	glBindTexture(GL_TEXTURE_2D, groundTx);
 	g_grid.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, -90.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, -90.0f, glm::vec3(-5.0f, 0.0f, 10.0f));
 	glDrawElements(GL_LINE_STRIP, g_grid.NumIndices(), GL_UNSIGNED_SHORT, 0);
 
 
