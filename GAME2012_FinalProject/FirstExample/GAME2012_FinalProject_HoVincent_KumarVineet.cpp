@@ -85,10 +85,11 @@ DirectionalLight dLight(glm::vec3(1.0f, 0.0f, 0.0f), // Direction.
 //	glm::vec3(1.0f, 0.0f, 1.0f),	// Diffuse colour.
 //	5.0f);						// Diffuse strength.
 
-PointLight pLights[4] = { { glm::vec3(7.5f, 1.5f, -5.0f),	10.0f, glm::vec3(1.0f, 0.0f, 0.0f), 1.0f },
-						  { glm::vec3(6.0f, 1.5f, -8.5f),	10.0f, glm::vec3(0.0f, 0.0f, 1.0f), 1.0f }, 
-						  { glm::vec3(5.0f, 1.5f, -7.0f),	10.0f, glm::vec3(0.0f, 1.0f, 0.0f), 1.0f }, 
-						  { glm::vec3(2.0f, 1.5f, -10.0f),	10.0f, glm::vec3(1.0f, 1.0f, 1.0f), 1.0f } };
+PointLight pLights[5] = { { glm::vec3(2.0f,  3.0f, -2.0f),		10.0f, glm::vec3(1.0f, 0.0f, 0.0f), 3.0f },
+						  { glm::vec3(16.0f, 3.0f, -2.0f),		10.0f, glm::vec3(0.0f, 0.0f, 1.0f), 3.0f }, 
+						  { glm::vec3(2.0f,  3.0f,  -23.0f),	10.0f, glm::vec3(0.0f, 1.0f, 0.0f), 3.0f }, 
+						  { glm::vec3(16.0f,  3.0f, -23.0f),	10.0f, glm::vec3(1.0f, 1.0f, 1.0f), 3.0f },
+						  { glm::vec3(9.5f,  3.0f, -11.5f),		10.0f, glm::vec3(1.0f, 0.0f, 1.0f), 3.0f } };
 
 
 
@@ -271,6 +272,13 @@ void setupLights()
 	glUniform1f(glGetUniformLocation(program, "pLights[3].constant"), pLights[3].constant);
 	glUniform1f(glGetUniformLocation(program, "pLights[3].linear"), pLights[3].linear);
 	glUniform1f(glGetUniformLocation(program, "pLights[3].exponent"), pLights[3].exponent);
+	
+	glUniform3f(glGetUniformLocation(program, "pLights[4].base.diffuseColour"), pLights[4].diffuseColour.x, pLights[4].diffuseColour.y, pLights[4].diffuseColour.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[4].base.diffuseStrength"), pLights[4].diffuseStrength);
+	glUniform3f(glGetUniformLocation(program, "pLights[4].position"), pLights[4].position.x, pLights[4].position.y, pLights[4].position.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[4].constant"), pLights[4].constant);
+	glUniform1f(glGetUniformLocation(program, "pLights[4].linear"), pLights[4].linear);
+	glUniform1f(glGetUniformLocation(program, "pLights[4].exponent"), pLights[4].exponent);
 }
 
 void init(void)
@@ -874,19 +882,19 @@ void keyDown(unsigned char key, int x, int y) // x and y is mouse location upon 
 			keys |= KEY_DOWN; break;
 	// Fill in point light movement.
 	case 'i':
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 5; i++)
 		pLights[i].position.z -= 0.1f;
 		break;
 	case 'j':
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 5; i++)
 		pLights[i].position.x -= 0.1f;
 		break;
 	case 'k':
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 5; i++)
 		pLights[i].position.z += 0.1f;
 		break;
 	case 'l':
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 5; i++)
 		pLights[i].position.x += 0.1f;
 		break;
 	}
