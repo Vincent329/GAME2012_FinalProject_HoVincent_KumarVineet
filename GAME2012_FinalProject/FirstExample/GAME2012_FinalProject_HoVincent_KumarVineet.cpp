@@ -104,6 +104,7 @@ bool keyDeposited_1 = false;
 bool printStatus_KeyCollected = false;
 bool printStatus_KeyDeposited = false;
 bool printStatus_NearGate = false;
+bool printStatus_RepetitionPrevention = true;
 bool hoverAnimation = false;
 
 void timer(int);
@@ -787,7 +788,7 @@ void display(void)
 		}
 		if (abs(position.x - depositPosition_1.x) < 3.0f && abs(position.z - depositPosition_1.z) < 3.0f && abs(position.y - depositPosition_1.y) < 3.0f)
 		{
-			std::cout << " You have the key, Deposit it! " << position.x << std::endl;
+			//std::cout << "You have the key, Deposit it! " << std::endl;
 			keyDeposited_1 = true;
 			printStatus_KeyDeposited = true;
 			depositPosition_1 = { 9.0f, 0.5f, -12.0f };
@@ -805,7 +806,10 @@ void display(void)
 	if (keyDeposited_1)
 	{
 		//placeCube(depositPosition_1, 1.0f, 1.0f, 1.0f, bonusKeyTx, 1.0f);
-		std::cout << "Ready to Go !" << std::endl;
+		//std::cout << "Ready to Go !" << std::endl;
+		//keyDeposited_1 = false;
+
+		printStatus_NearGate = true;
 	}
 
 	// Draw all the shapes
@@ -819,19 +823,16 @@ void display(void)
 
 	if (printStatus_KeyCollected)
 	{
+		system("cls");
 		std::cout << "Key Collected!! Now Deposit this key at it's location." << std::endl;
 		printStatus_KeyCollected = false;
 	}
 
 	if(printStatus_KeyDeposited)
 	{
+		system("cls");
 		std::cout << "Key Deposited!! The Gates are now unlocked." << std::endl;
 		printStatus_KeyDeposited = false;
-	}
-
-	if(printStatus_NearGate)
-	{
-		
 	}
 	
 	if(abs(position.x - gatePosition_1.x) < 2.0f && abs(position.z - gatePosition_1.z) < 2.0f && abs(position.y - gatePosition_1.y) < 2.0f)
@@ -843,11 +844,15 @@ void display(void)
 		}
 		else if (keyCollected_1 && !keyDeposited_1)
 		{
+			system("cls");
+			
 			std::cout << "Key Has been Collected! Now place it at it's location to unlock the gate." << std::endl;
+			
 		}
-		else if (keyDeposited_1)
+		else if (printStatus_NearGate && printStatus_RepetitionPrevention)
 		{
 			std::cout << "You may pass!" << std::endl;
+			printStatus_RepetitionPrevention = false;
 		}
 	}
 	
