@@ -72,7 +72,7 @@ float lightZ = 0.0f;
 
 // Light variables.
 AmbientLight aLight(glm::vec3(1.0f, 1.0f, 1.0f),	// Ambient colour.
-	0.25f);							// Ambient strength.
+	0.5f);							// Ambient strength.
 
 DirectionalLight dLight(glm::vec3(1.0f, 0.0f, 0.0f), // Direction.
 	glm::vec3(1.0f, 1.0f, 0.5f),  // Diffuse colour.
@@ -126,10 +126,8 @@ Prism g_prism(24);
 Plane g_plane;
 
 // where we set up objects
-Cube test_cube(5.0f, 6.0f, 7.0f);
-
 // creating the struct for shape info, create an std vector after
-struct ShapeInfo {
+struct ShapeList {
 	Shape shape;
 	glm::vec3 scale;
 	glm::vec3 color;
@@ -139,17 +137,17 @@ struct ShapeInfo {
 	float rotAngle;
 };
 
-std::vector<ShapeInfo> Shapes;
+std::vector<ShapeList> Shapes;
 
 // creating any cube
 void placeCube(glm::vec3 pos, float l, float w, float h, GLuint id, float scale, glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
 {
-	ShapeInfo s;
+	ShapeList s;
+	s.position = pos;
 	s.shape = Cube(l, w, h);
+	s.textureID = id;
 	s.scale = glm::vec3(scale, scale, scale);
 	s.color = c;
-	s.position = pos;
-	s.textureID = id;
 	s.rotAxis = rot;
 	s.rotAngle = angle;
 	Shapes.push_back(s);	
@@ -159,7 +157,7 @@ void placeCube(glm::vec3 pos, float l, float w, float h, GLuint id, float scale,
 void placeCylinder(glm::vec3 pos, float sides, float h, GLuint id, glm::vec3 scale, 
 	glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
 {
-	ShapeInfo s;
+	ShapeList s;
 	s.shape = ClonedPrism(sides, h);
 	s.scale = scale;
 	s.color = c;
@@ -173,7 +171,7 @@ void placeCylinder(glm::vec3 pos, float sides, float h, GLuint id, glm::vec3 sca
 void placeCone(glm::vec3 pos, float sides, float h, GLuint id, glm::vec3 scale, 
 	glm::vec3 c = glm::vec3(1, 1, 1), glm::vec3 rot = Y_AXIS, float angle = 0.0f)
 {
-	ShapeInfo s;
+	ShapeList s;
 	s.shape = ClonedCone(sides, h);
 	s.scale = scale;
 	s.color = c;
@@ -222,13 +220,13 @@ void transformObject(glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngl
 }
 
 
-void DrawShape(ShapeInfo& sInfo, GLenum mode = GL_TRIANGLES)
+void DrawShapeList(ShapeList& list)
 {
-	glBindTexture(GL_TEXTURE_2D, sInfo.textureID);
-	sInfo.shape.ColorShape(sInfo.color.x, sInfo.color.y, sInfo.color.z);
-	sInfo.shape.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
-	transformObject(sInfo.scale, sInfo.rotAxis, sInfo.rotAngle, sInfo.position);
-	glDrawElements(mode, sInfo.shape.NumIndices(), GL_UNSIGNED_SHORT, 0);
+	glBindTexture(GL_TEXTURE_2D, list.textureID);
+	list.shape.ColorShape(list.color.x, list.color.y, list.color.z);
+	list.shape.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
+	transformObject(list.scale, list.rotAxis, list.rotAngle, list.position);
+	glDrawElements(GL_TRIANGLES, list.shape.NumIndices(), GL_UNSIGNED_SHORT, 0);
 }
 
 void setupLights()
@@ -434,6 +432,20 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	stbi_image_free(image8);
 
+	// cone roof
+	unsigned char* image9 = stbi_load("tx_roof_mix_1.jpg", &width, &height, &bitDepth, 0);
+	if (!image9) cout << "Unable to load file!" << endl;
+
+	glGenTextures(1, &roofTx);
+	glBindTexture(GL_TEXTURE_2D, roofTx);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image9);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	stbi_image_free(image9);
+
+
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
 	// Set lights
@@ -558,11 +570,11 @@ void init(void)
 	// ------------------------ Castle Corners --------------------------------
 	// Tower 1
 	placeCylinder(glm::vec3(-2.25f, 0.0f, -0.1f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(-2.75f, 5.0f, -0.375f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(-2.75f, 5.0f, -0.375f), 10, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 
 	// Tower 2
 	placeCylinder(glm::vec3(-2.25f, 0.0f, -26.75f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(-2.75f, 5.0f, -27.25f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(-2.75f, 5.0f, -27.25f), 10, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 
 
 	//Right 
@@ -590,11 +602,11 @@ void init(void)
 	// ------------------------ Castle Corners --------------------------------
 	// Tower 3
 	placeCylinder(glm::vec3(19.25f, 0.0f, -0.1f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(18.75f, 5.0f, -0.5f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(18.75f, 5.0f, -0.5f), 10, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 
 	// Tower 4
 	placeCylinder(glm::vec3(19.25f, 0.0f, -26.75f), 12, 5, castleWallsTx, { 2.0f,1.0f,2.0f, }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
-	placeCone(glm::vec3(18.75f, 5.0f, -27.5f), 10, 3, castleWallsTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
+	placeCone(glm::vec3(18.75f, 5.0f, -27.5f), 10, 3, roofTx, { 3.0f,1.0f,3.0f }, { 1.0f,1.0f,1.0f }, { 0,1,0 }, 0);
 
 	
 	//Back Wall ----
@@ -695,7 +707,6 @@ void init(void)
 	placeCube(glm::vec3(12.0f, 5.0f, -28.5f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
 	placeCube(glm::vec3(13.5f, 5.0f, -28.5f), 1.0f, 0.5f, 0.75f, castleWallsTx, 1.0f);
 
-
 	// ------------------------- Stairs -------------------------------
 	placeCube(glm::vec3(8.0f, 0.0f, -24.0f), 1.0f, 3.0f, 0.5f, stoneTx, 1.0f);
 	placeCube(glm::vec3(8.0f, 0.0f, -25.0f), 1.0f, 3.0f, 1.0f, stoneTx, 1.0f);
@@ -748,7 +759,6 @@ void display(void)
 	g_grid.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
 	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, -90.0f, glm::vec3(-5.0f, 0.0f, 10.0f));
 	glDrawElements(GL_LINE_STRIP, g_grid.NumIndices(), GL_UNSIGNED_SHORT, 0);
-
 
 	glBindTexture(GL_TEXTURE_2D, groundTx);
 	g_plane.BufferShape(&ibo, &points_vbo, &colors_vbo, &uv_vbo, &normals_vbo, program);
@@ -813,8 +823,8 @@ void display(void)
 	}
 
 	// Draw all the shapes
-	for (std::vector<ShapeInfo>::iterator it = Shapes.begin(); it != Shapes.end(); ++it) {
-		DrawShape(*it);
+	for (std::vector<ShapeList>::iterator it = Shapes.begin(); it != Shapes.end(); ++it) {
+		DrawShapeList(*it);
 		//std::cout << Shapes.size() << std::endl;
 	}
 
@@ -1008,6 +1018,14 @@ void clean()
 	cout << "Cleaning up!" << endl;
 	glDeleteTextures(1, &alexTx);
 	glDeleteTextures(1, &blankTx);
+	glDeleteTextures(1, &castleWallsTx);
+	glDeleteTextures(1, &stoneTx);
+	glDeleteTextures(1, &brickTx);
+	glDeleteTextures(1, &hedgeTx);
+	glDeleteTextures(1, &roofTx);
+	glDeleteTextures(1, &groundTx);
+	glDeleteTextures(1, &bonusKeyTx);
+	glDeleteTextures(1, &bonusKeyTx2);
 }
 
 //---------------------------------------------------------------------
